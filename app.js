@@ -81,9 +81,50 @@ const PAGE_COPY = {
     footer: "Ratings are saved in this browser. Click “Submit ratings” when finished.",
   },
 };
+const CHINESE_INSTRUCTION_OVERRIDES = {
+  vibrato_01: "“欢”、“台”：颤音",
+  vibrato_02: "“路”：颤音",
+  vibrato_03: "“你”：颤音",
+  vibrato_04: "“会”：颤音",
+  vibrato_05: "“寂”：颤音",
+  vibrato_06: "第一个“的”、“往”：颤音",
+  gliss_01_hui: "“会”：下滑音",
+  gliss_02_si_mei: "“四”：下滑音；“没”：上滑音",
+  gliss_03_hei: "“黑”：上滑音",
+  gliss_04_dayu: "“境”：上滑音；“游”：下滑音",
+  gliss_05_fangyuan: "“那”：上滑音；“稚”：下滑音",
+  gliss_06_nanshan: "“一”：下滑音；“梦”：上滑音",
+  combo_01_yiluxiangbei: "“你说你好累”：混声；“已无法再爱上谁”：咽音；“谁”：叠加颤音",
+  combo_02_gumeng: "“追不上”：同时使用气声和假声",
+  combo_03_maoxianmeng: "“当生命每分每秒都为你”：气声；“转动”：咽音",
+  combo_04_yujian: "全段：气声；“他在多远的未来”：假声",
+  combo_05_wozhidao_a: "“太过”、“以为你会”：混声；“骄纵”：假声；“懂”：颤音",
+  combo_06_wozhidao_b: "全段：混声；“动”：叠加颤音",
+  combo_07_guangnian: "全段：咽音；“危”：假声；“难中相爱”：混声",
+  combo_08_luoyeguigen: "“不胜唏嘘”：假声；“幻化成秋夜”：咽音；“夜”：叠加颤音",
+  combo_09_dangnilaole: "全段：同时使用气声和假声",
+  combo_10_yuai: "“听雨的”、“一滴滴”：同时使用气声和假声；“呼吸像雨滴”：不添加新技巧，保留原唱已有假声；“渗入我的爱里”：混声",
+  combo_11_xiangziyou: "“才”：下滑音并叠加假声；“不快乐”：咽音",
+  combo_12_dayu: "“飞远去”：咽音；“飞”：颤音；“看你离我而去”：气声",
+};
+const ENGLISH_INSTRUCTION_OVERRIDES = {
+  en_vibrato_01: "“SONG”: vibrato.",
+  en_vibrato_02: "“FEEL”: vibrato.",
+  en_vibrato_03: "“APART”: vibrato.",
+  en_glissando_01: "“WERE”: downward glissando.",
+  en_glissando_02: "“GIRL”: upward glissando.",
+  en_glissando_03: "First syllable of “EVERYTHING” (EH V): downward glissando.",
+  en_combo_01: "“NEAR” and “FAR”: breathy; “FAR”: vibrato; “WHEREVER YOU ARE”: mixed voice.",
+  en_combo_02: "“BABY YOU WOULD TAKE AWAY”: falsetto; “YOU”: downward glissando.",
+  en_combo_03: "“YOU AND I”: pharyngeal; “I” and “PACT”: vibrato; “MAKE”: falsetto.",
+  en_combo_04: "“LOVE YOU”: pharyngeal; final third of “YOU”: vibrato.",
+  en_combo_05: "Entire sample: falsetto and breathy.",
+  en_combo_06: "“SO MANY”: breathy; first syllable of “MANY”: upward glissando.",
+};
 
 let manifest = null;
 let state = loadState();
+let explainedGlissandoDirections = new Set();
 
 function loadState() {
   const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}};
@@ -166,9 +207,41 @@ function localizedCandidateLabel(candidate) {
   return localized(`候选 ${suffix}`, `Candidate ${suffix}`);
 }
 
-function localizedInstruction(instruction) {
-  if (currentLanguage() === "en") return instruction;
-  return String(instruction)
+function glissandoLabel(direction) {
+  if (currentLanguage() === "en") return direction === "up" ? "upward glissando" : "downward glissando";
+  return direction === "up" ? "上滑音" : "下滑音";
+}
+
+function replaceTrajectoryData(instruction) {
+  return instruction.replace(
+    /(?:source-relative pitch delta\s*)?([+-]?\d+)\s*→\s*([+-]?\d+)\s*(?:cents?|音分)/gi,
+    (_, startValue, endValue) => glissandoLabel(Number(endValue) > Number(startValue) ? "up" : "down"),
+  );
+}
+
+function annotateFirstGlissandoDirections(instruction) {
+  const labels = currentLanguage() === "en"
+    ? {up: "upward glissando", down: "downward glissando"}
+    : {up: "上滑音", down: "下滑音"};
+  let result = instruction;
+  for (const direction of ["up", "down"]) {
+    result = result.replaceAll(labels[direction], label => {
+      if (explainedGlissandoDirections.has(direction)) return label;
+      explainedGlissandoDirections.add(direction);
+      const explanation = currentLanguage() === "en"
+        ? (direction === "up" ? "from a lower pitch to a higher pitch" : "from a higher pitch to a lower pitch")
+        : (direction === "up" ? "从低音滑向高音" : "从高音滑向低音");
+      return currentLanguage() === "en" ? `${label} (${explanation})` : `${label}（${explanation}）`;
+    });
+  }
+  return result;
+}
+
+function localizedInstruction(testCase) {
+  const language = currentLanguage();
+  const instructionOverrides = language === "en" ? ENGLISH_INSTRUCTION_OVERRIDES : CHINESE_INSTRUCTION_OVERRIDES;
+  const rawInstruction = instructionOverrides[testCase.case_id] || String(testCase.instruction);
+  let simplified = rawInstruction
     .replace(/pharyngeal/gi, "咽音")
     .replace(/breathy/gi, "气声")
     .replace(/falsetto/gi, "假声")
@@ -179,7 +252,15 @@ function localizedInstruction(instruction) {
     .replace(/(\d+)c\b/g, "$1音分")
     .replace(/cents?/gi, "音分")
     .replace(/Hz/gi, "赫兹")
-    .replace(/\bv1\b/gi, "第一版");
+    .replace(/\bv1\b/gi, "第一版")
+    .replace(/^全段\s+/, "全段：");
+  if (language === "en") {
+    simplified = rawInstruction
+      .replace(/\s*\([^)]*(?:cents?|Hz)[^)]*\)/gi, "")
+      .replace(/\s+\./g, ".");
+  }
+  simplified = replaceTrajectoryData(simplified);
+  return annotateFirstGlissandoDirections(simplified);
 }
 
 function activeCases() {
@@ -212,7 +293,7 @@ function caseRow(testCase, candidateCount) {
   const techniqueLabel = localized("技巧要求", "Technique instruction");
   const notesLabel = localized("可选备注", "Optional notes");
   const separator = localized("：", ": ");
-  const details = `${testCase.lyrics ? `<p><strong>${lyricsLabel}${separator}</strong>${escapeHtml(testCase.lyrics)}</p>` : ""}<p><strong>${techniqueLabel}${separator}</strong>${escapeHtml(localizedInstruction(testCase.instruction))}</p>`;
+  const details = `${testCase.lyrics ? `<p><strong>${lyricsLabel}${separator}</strong>${escapeHtml(testCase.lyrics)}</p>` : ""}<p><strong>${techniqueLabel}${separator}</strong>${escapeHtml(localizedInstruction(testCase))}</p>`;
   const cells = testCase.candidates.map(candidate => candidateCell(testCase, candidate)).join("");
   const padding = Array.from({length: candidateCount - testCase.candidates.length}, () => "<td></td>").join("");
   return `<tr data-case-id="${escapeHtml(testCase.case_id)}"><td class="case-info"><h3>${escapeHtml(localizedCaseTitle(testCase))}</h3>${details}<textarea class="notes" data-note-key="${escapeHtml(testCase.case_id)}" placeholder="${escapeHtml(notesLabel)}">${escapeHtml(state.notes[testCase.case_id] || "")}</textarea></td><td class="source-cell"><strong>${localized("原始音频", "Original audio")}</strong>${audioPlayer(testCase.source_audio)}</td>${cells}${padding}</tr>`;
@@ -240,6 +321,7 @@ function referenceCard(technique) {
 function render() {
   const app = document.getElementById("app");
   const visibleCases = activeCases();
+  explainedGlissandoDirections = new Set();
   if (!visibleCases.length) {
     app.innerHTML = `<section class="form-empty"><h2>${localized("问卷加载失败", "Failed to load the evaluation")}</h2><p>${localized("请刷新页面；若问题仍然存在，请联系研究者。", "Refresh the page. If the problem persists, contact the researcher.")}</p></section>`;
     updateProgress();
