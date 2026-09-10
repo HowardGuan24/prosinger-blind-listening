@@ -69,8 +69,8 @@ function tableForCases(cases) {
   const candidateCount = Math.max(...cases.map(item => item.candidates.length));
   const candidateHeaders = Array.from({length: candidateCount}, (_, index) => `<th>匿名候选 ${String.fromCharCode(65 + index)}</th>`).join("");
   const candidateColumns = Array.from({length: candidateCount}, () => '<col class="candidate-column">').join("");
-  const minWidth = 430 + 320 + candidateCount * 380;
-  return `<div class="table-wrap"><table style="min-width:${minWidth}px"><colgroup><col class="case-column"><col class="source-column">${candidateColumns}</colgroup><thead><tr><th>样本与要求</th><th>原始音频</th>${candidateHeaders}</tr></thead><tbody>${cases.map(item => caseRow(item, candidateCount)).join("")}</tbody></table></div>`;
+  const candidateWidth = (65 / candidateCount).toFixed(4);
+  return `<div class="table-wrap"><table style="--candidate-width:${candidateWidth}%"><colgroup><col class="case-column"><col class="source-column">${candidateColumns}</colgroup><thead><tr><th>样本与要求</th><th>原始音频</th>${candidateHeaders}</tr></thead><tbody>${cases.map(item => caseRow(item, candidateCount)).join("")}</tbody></table></div>`;
 }
 
 function render() {
