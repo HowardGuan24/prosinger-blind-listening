@@ -11,11 +11,13 @@
     <div>
       <p class="eyebrow">Blind listening study</p>
       <h1>ProSinger 歌唱技巧盲听评测</h1>
-      <p class="intro">候选系统已匿名。请使用耳机，在安静环境中完成评分。</p>
+      <p class="intro">候选系统已匿名。请使用耳机，在安静环境中完成研究者分配的 24 个样本。</p>
     </div>
     <div class="participant-panel">
-      <label for="participant-id">听众编号</label>
-      <input id="participant-id" autocomplete="off" placeholder="例如 listener_01">
+      <div class="participant-fields">
+        <label>问卷版本<select id="form-id"><option value="">请选择 A 或 B</option></select></label>
+        <label>听众编号<input id="participant-id" autocomplete="off" placeholder="例如 listener_01"></label>
+      </div>
       <p id="save-status">评分会自动保存在当前浏览器。</p>
     </div>
   </header>
@@ -32,15 +34,17 @@
   </section>
 
   <div class="toolbar">
-    <div><strong id="progress-text">0 / 0</strong><span> 项评分完成</span></div>
+    <div class="progress-copy"><strong id="progress-text">0 / 24</strong><span> 个样本完成</span></div>
     <progress id="progress-bar" value="0" max="1"></progress>
+    <button id="submit-results" type="button">提交评分</button>
     <button id="export-json" type="button">导出 JSON</button>
     <button id="export-csv" type="button">导出 CSV</button>
     <button id="clear-ratings" class="secondary" type="button">清空评分</button>
+    <span id="submission-status" class="submission-status" role="status"></span>
   </div>
 
   <main id="app"><p class="loading">正在加载测试清单……</p></main>
-  <footer>本页面不会上传评分；请完成后导出 JSON 或 CSV 并交给研究者。</footer>
+  <footer id="page-footer">评分保存在当前浏览器；提交成功前可导出 JSON 或 CSV 作为备份。</footer>
   <script src="manifest.js"></script>
   <script src="app.js"></script>
 </body>

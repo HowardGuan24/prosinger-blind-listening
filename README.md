@@ -15,5 +15,15 @@ Then open `http://localhost:8000`.
 Create a separate public repository, copy only the contents of `site/` into it, push to
 `main`, and configure **Settings → Pages → Deploy from a branch → main / (root)**.
 
-Do not publish `../private/answer_key.json`. Each listener exports a JSON or CSV file and
-sends it to the researcher. GitHub Pages is static and does not collect ratings by itself.
+Do not publish `../private/answer_key.json`.
+
+## Result submission
+
+GitHub Pages cannot store submissions by itself. Rebuild with an HTTPS collection endpoint:
+
+```bash
+python build_site.py --overwrite --submission-endpoint "https://YOUR-ENDPOINT"
+```
+
+The endpoint receives one complete questionnaire as a JSON body using `text/plain;charset=UTF-8`.
+Without an endpoint, the submit button is disabled and JSON/CSV export remains available.

@@ -1,10 +1,71 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "title": "ProSinger Blind Listening Evaluation",
   "rating_scale": {
     "min": 0,
     "max": 4
   },
+  "forms": {
+    "A": {
+      "label": "问卷 A",
+      "case_ids": [
+        "pharyngeal_01",
+        "pharyngeal_03",
+        "pharyngeal_05",
+        "breathy_01",
+        "breathy_03",
+        "breathy_05",
+        "mix_01",
+        "mix_03",
+        "mix_05",
+        "falsetto_01",
+        "falsetto_03",
+        "falsetto_05",
+        "vibrato_01",
+        "vibrato_03",
+        "vibrato_05",
+        "gliss_01_hui",
+        "gliss_03_hei",
+        "gliss_05_fangyuan",
+        "combo_01_yiluxiangbei",
+        "combo_03_maoxianmeng",
+        "combo_05_wozhidao_a",
+        "combo_07_guangnian",
+        "combo_09_dangnilaole",
+        "combo_11_xiangziyou"
+      ]
+    },
+    "B": {
+      "label": "问卷 B",
+      "case_ids": [
+        "pharyngeal_02",
+        "pharyngeal_04",
+        "pharyngeal_06",
+        "breathy_02",
+        "breathy_04",
+        "breathy_06",
+        "mix_02",
+        "mix_04",
+        "mix_06",
+        "falsetto_02",
+        "falsetto_04",
+        "falsetto_06",
+        "vibrato_02",
+        "vibrato_04",
+        "vibrato_06",
+        "gliss_02_si_mei",
+        "gliss_04_dayu",
+        "gliss_06_nanshan",
+        "combo_02_gumeng",
+        "combo_04_yujian",
+        "combo_06_wozhidao_b",
+        "combo_08_luoyeguigen",
+        "combo_10_yuai",
+        "combo_12_dayu"
+      ]
+    }
+  },
+  "submission_endpoint": "",
   "technique_references": {
     "pharyngeal": "media/technique_references/pharyngeal.wav",
     "breathy": "media/technique_references/breathy.wav",
@@ -36,7 +97,7 @@
     {
       "case_id": "pharyngeal_01",
       "kind": "single",
-      "title": "咽音 1",
+      "title": "样本 1",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -68,7 +129,7 @@
     {
       "case_id": "pharyngeal_02",
       "kind": "single",
-      "title": "咽音 2",
+      "title": "样本 1",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -100,7 +161,7 @@
     {
       "case_id": "pharyngeal_03",
       "kind": "single",
-      "title": "咽音 3",
+      "title": "样本 2",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -132,7 +193,7 @@
     {
       "case_id": "pharyngeal_04",
       "kind": "single",
-      "title": "咽音 4",
+      "title": "样本 2",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -164,7 +225,7 @@
     {
       "case_id": "pharyngeal_05",
       "kind": "single",
-      "title": "咽音 5",
+      "title": "样本 3",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -196,7 +257,7 @@
     {
       "case_id": "pharyngeal_06",
       "kind": "single",
-      "title": "咽音 6",
+      "title": "样本 3",
       "technique": "pharyngeal",
       "technique_name": "咽音 Pharyngeal",
       "instruction": "全段 pharyngeal",
@@ -228,7 +289,7 @@
     {
       "case_id": "breathy_01",
       "kind": "single",
-      "title": "气音 1",
+      "title": "样本 1",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -260,7 +321,7 @@
     {
       "case_id": "breathy_02",
       "kind": "single",
-      "title": "气音 2",
+      "title": "样本 1",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -292,7 +353,7 @@
     {
       "case_id": "breathy_03",
       "kind": "single",
-      "title": "气音 3",
+      "title": "样本 2",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -324,7 +385,7 @@
     {
       "case_id": "breathy_04",
       "kind": "single",
-      "title": "气音 4",
+      "title": "样本 2",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -356,7 +417,7 @@
     {
       "case_id": "breathy_05",
       "kind": "single",
-      "title": "气音 5",
+      "title": "样本 3",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -388,7 +449,7 @@
     {
       "case_id": "breathy_06",
       "kind": "single",
-      "title": "气音 6",
+      "title": "样本 3",
       "technique": "breathy",
       "technique_name": "气声 Breathy",
       "instruction": "全段 breathy",
@@ -420,7 +481,7 @@
     {
       "case_id": "mix_01",
       "kind": "single",
-      "title": "混声 1",
+      "title": "样本 1",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -452,7 +513,7 @@
     {
       "case_id": "mix_02",
       "kind": "single",
-      "title": "混声 2",
+      "title": "样本 1",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -484,7 +545,7 @@
     {
       "case_id": "mix_03",
       "kind": "single",
-      "title": "混声 3",
+      "title": "样本 2",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -516,7 +577,7 @@
     {
       "case_id": "mix_04",
       "kind": "single",
-      "title": "混声 4",
+      "title": "样本 2",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -548,7 +609,7 @@
     {
       "case_id": "mix_05",
       "kind": "single",
-      "title": "混声 5",
+      "title": "样本 3",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -580,7 +641,7 @@
     {
       "case_id": "mix_06",
       "kind": "single",
-      "title": "混声 6",
+      "title": "样本 3",
       "technique": "mix",
       "technique_name": "混声 Mixed voice",
       "instruction": "全段 mix",
@@ -612,7 +673,7 @@
     {
       "case_id": "falsetto_01",
       "kind": "single",
-      "title": "假音 1",
+      "title": "样本 1",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -644,7 +705,7 @@
     {
       "case_id": "falsetto_02",
       "kind": "single",
-      "title": "假音 2",
+      "title": "样本 1",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -676,7 +737,7 @@
     {
       "case_id": "falsetto_03",
       "kind": "single",
-      "title": "假音 3",
+      "title": "样本 2",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -708,7 +769,7 @@
     {
       "case_id": "falsetto_04",
       "kind": "single",
-      "title": "假音 4",
+      "title": "样本 2",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -740,7 +801,7 @@
     {
       "case_id": "falsetto_05",
       "kind": "single",
-      "title": "假音 5",
+      "title": "样本 3",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -772,7 +833,7 @@
     {
       "case_id": "falsetto_06",
       "kind": "single",
-      "title": "假音 6",
+      "title": "样本 3",
       "technique": "falsetto",
       "technique_name": "假声 Falsetto",
       "instruction": "全段 falsetto",
@@ -804,7 +865,7 @@
     {
       "case_id": "vibrato_01",
       "kind": "single",
-      "title": "颤音 1",
+      "title": "样本 1",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "欢、台：±20c @ 5Hz",
@@ -831,12 +892,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "你喜欢站在那窗台"
     },
     {
       "case_id": "vibrato_02",
       "kind": "single",
-      "title": "颤音 2",
+      "title": "样本 1",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "路：±20c @ 5Hz",
@@ -863,12 +925,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "走过你来时的路"
     },
     {
       "case_id": "vibrato_03",
       "kind": "single",
-      "title": "颤音 3",
+      "title": "样本 2",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "你：±20c @ 5Hz",
@@ -895,12 +958,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "因为我完全信任你"
     },
     {
       "case_id": "vibrato_04",
       "kind": "single",
-      "title": "颤音 4",
+      "title": "样本 2",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "会：±20c @ 5Hz",
@@ -927,12 +991,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "有期待会相见"
     },
     {
       "case_id": "vibrato_05",
       "kind": "single",
-      "title": "颤音 5",
+      "title": "样本 3",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "清单未指定位置；v1 选择句尾‘寂’：±20c @ 5Hz",
@@ -959,12 +1024,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "我被爱判处终身孤寂"
     },
     {
       "case_id": "vibrato_06",
       "kind": "single",
-      "title": "颤音 6",
+      "title": "样本 3",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
       "instruction": "第一个‘的’、‘往’：±20c @ 5Hz",
@@ -991,12 +1057,13 @@
         "singer_similarity",
         "technique_accuracy",
         "technique_quality"
-      ]
+      ],
+      "lyrics": "是你的名字停留在我的过往"
     },
     {
       "case_id": "combo_01_yiluxiangbei",
       "kind": "composite",
-      "title": "一路向北：混声/咽音/颤音",
+      "title": "样本 1",
       "lyrics": "你说你好累，已无法再爱上谁",
       "instruction": "你说你好累混声；已无法再爱上谁咽音；谁叠加颤音",
       "source_audio": "media/cases/combo_01_yiluxiangbei/source.wav",
@@ -1020,7 +1087,7 @@
     {
       "case_id": "combo_02_gumeng",
       "kind": "composite",
-      "title": "故梦：气音+假音",
+      "title": "样本 1",
       "lyrics": "任身后哭号嘶喊着也，追不上",
       "instruction": "追不上同时加气音和假音",
       "source_audio": "media/cases/combo_02_gumeng/source.wav",
@@ -1044,7 +1111,7 @@
     {
       "case_id": "combo_03_maoxianmeng",
       "kind": "composite",
-      "title": "那些你很冒险的梦：气音/咽音",
+      "title": "样本 2",
       "lyrics": "当生命每分每秒都为你转动，当生命每分每秒都为你转动",
       "instruction": "当生命每分每秒都为你气音；转动咽音",
       "source_audio": "media/cases/combo_03_maoxianmeng/source.wav",
@@ -1068,7 +1135,7 @@
     {
       "case_id": "combo_04_yujian",
       "kind": "composite",
-      "title": "遇见：气音+假音",
+      "title": "样本 2",
       "lyrics": "我等的人他在多远的未来",
       "instruction": "全段气音；他在多远的未来假音",
       "source_audio": "media/cases/combo_04_yujian/source.wav",
@@ -1092,7 +1159,7 @@
     {
       "case_id": "combo_05_wozhidao_a",
       "kind": "composite",
-      "title": "我知道 A：混声/假音/颤音",
+      "title": "样本 3",
       "lyrics": "太过骄纵，以为你会懂",
       "instruction": "太过、以为你会混声；骄纵假音；懂颤音",
       "source_audio": "media/cases/combo_05_wozhidao_a/source.wav",
@@ -1116,7 +1183,7 @@
     {
       "case_id": "combo_06_wozhidao_b",
       "kind": "composite",
-      "title": "我知道 B：混声+颤音",
+      "title": "样本 3",
       "lyrics": "一直忘了说，我有多感动",
       "instruction": "全段混声；动叠加颤音",
       "source_audio": "media/cases/combo_06_wozhidao_b/source.wav",
@@ -1140,7 +1207,7 @@
     {
       "case_id": "combo_07_guangnian",
       "kind": "composite",
-      "title": "光年之外：咽音/假音/混声",
+      "title": "样本 4",
       "lyrics": "命运却让我们危难中相爱",
       "instruction": "全段咽音；危假音；难中相爱混声",
       "source_audio": "media/cases/combo_07_guangnian/source.wav",
@@ -1164,7 +1231,7 @@
     {
       "case_id": "combo_08_luoyeguigen",
       "kind": "composite",
-      "title": "落叶归根：假音/咽音/颤音",
+      "title": "样本 4",
       "lyrics": "不胜唏嘘，幻化成秋夜",
       "instruction": "不胜唏嘘假音；幻化成秋夜咽音；夜叠加颤音",
       "source_audio": "media/cases/combo_08_luoyeguigen/source.wav",
@@ -1188,7 +1255,7 @@
     {
       "case_id": "combo_09_dangnilaole",
       "kind": "composite",
-      "title": "当你老了：气音+假音",
+      "title": "样本 5",
       "lyrics": "当你老了，头发白了",
       "instruction": "全段同时加气音和假音",
       "source_audio": "media/cases/combo_09_dangnilaole/source.wav",
@@ -1212,9 +1279,9 @@
     {
       "case_id": "combo_10_yuai",
       "kind": "composite",
-      "title": "雨爱：气音+假音/中性/混声",
+      "title": "样本 5",
       "lyrics": "听雨的声音，一滴滴清晰，你的呼吸像雨滴，渗入我的爱里",
-      "instruction": "听雨的、一滴滴：气声+假声；中间：无技巧；渗入我的爱里：混声",
+      "instruction": "听雨的、一滴滴：气声+假声；中间不加新技巧（‘呼吸像雨滴’保留原唱已有假声）；渗入我的爱里：混声",
       "source_audio": "media/cases/combo_10_yuai/source.wav",
       "candidates": [
         {
@@ -1236,7 +1303,7 @@
     {
       "case_id": "combo_11_xiangziyou",
       "kind": "composite",
-      "title": "想自由：滑音+假声/咽音",
+      "title": "样本 6",
       "lyrics": "我们才会瞬间就不快乐",
       "instruction": "才：+200→0 cents 滑音并叠加假声；不快乐：咽音",
       "source_audio": "media/cases/combo_11_xiangziyou/source.wav",
@@ -1260,7 +1327,7 @@
     {
       "case_id": "combo_12_dayu",
       "kind": "composite",
-      "title": "大鱼：咽音+颤音/气声",
+      "title": "样本 6",
       "lyrics": "看你飞远去，看你离我而去",
       "instruction": "飞远去：咽音；飞：±20 cents、5 Hz 颤音；看你离我而去：气声",
       "source_audio": "media/cases/combo_12_dayu/source.wav",
@@ -1284,7 +1351,7 @@
     {
       "case_id": "gliss_01_hui",
       "kind": "single",
-      "title": "滑音 1 · 会",
+      "title": "样本 1",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
       "lyrics": "有期待会相见",
@@ -1317,10 +1384,10 @@
     {
       "case_id": "gliss_02_si_mei",
       "kind": "single",
-      "title": "滑音 2 · 四/没",
+      "title": "样本 1",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
-      "lyrics": "<SP>一九八四年庄稼还没收割完",
+      "lyrics": "一九八四年庄稼还没收割完",
       "instruction": "四：+200→+0 cents；没：-300→+0 cents",
       "source_audio": "media/cases/gliss_02_si_mei/source.wav",
       "candidates": [
@@ -1350,7 +1417,7 @@
     {
       "case_id": "gliss_03_hei",
       "kind": "single",
-      "title": "滑音 3 · 黑",
+      "title": "样本 2",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
       "lyrics": "天特别亮夜特别的黑",
@@ -1383,7 +1450,7 @@
     {
       "case_id": "gliss_04_dayu",
       "kind": "single",
-      "title": "滑音 4 · 境/游",
+      "title": "样本 2",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
       "lyrics": "大鱼在梦境的缝隙里游过",
@@ -1416,7 +1483,7 @@
     {
       "case_id": "gliss_05_fangyuan",
       "kind": "single",
-      "title": "滑音 5 · 那/稚",
+      "title": "样本 3",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
       "lyrics": "不需要发誓那么幼稚",
@@ -1449,7 +1516,7 @@
     {
       "case_id": "gliss_06_nanshan",
       "kind": "single",
-      "title": "滑音 6 · 第二个一/梦",
+      "title": "样本 3",
       "technique": "glissando",
       "technique_name": "滑音 Glissando",
       "lyrics": "穷极一生做不完一场梦",
