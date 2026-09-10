@@ -1,4 +1,4 @@
-const STORAGE_KEY = "prosinger_blind_listening_v3";
+const STORAGE_KEY = "prosinger_blind_listening_v5";
 const METRIC_NAMES = {
   naturalness: "自然度",
   singer_similarity: "歌手相似度",

@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "title": "ProSinger Blind Listening Evaluation",
   "rating_scales": {
     "naturalness": {
@@ -37,33 +37,37 @@
       }
     },
     "singer_similarity": {
-      "type": "four_level_match",
+      "type": "mos",
       "values": [
         1,
         2,
         3,
-        4
+        4,
+        5
       ],
       "labels": {
         "1": "完全不匹配",
         "2": "少部分匹配",
-        "3": "大部分匹配",
-        "4": "完全匹配"
+        "3": "部分匹配",
+        "4": "大部分匹配",
+        "5": "完全匹配"
       }
     },
     "technique_accuracy": {
-      "type": "four_level_match",
+      "type": "mos",
       "values": [
         1,
         2,
         3,
-        4
+        4,
+        5
       ],
       "labels": {
         "1": "完全不匹配",
         "2": "少部分匹配",
-        "3": "大部分匹配",
-        "4": "完全匹配"
+        "3": "部分匹配",
+        "4": "大部分匹配",
+        "5": "完全匹配"
       }
     }
   },
