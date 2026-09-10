@@ -3,34 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ProSinger Blind Listening Evaluation</title>
-  <link rel="stylesheet" href="styles.css?v=5">
+  <title>Prosing Blind Listening Evaluation</title>
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <header class="page-header">
     <div>
       <p class="eyebrow">Blind listening study</p>
-      <h1>ProSinger 歌唱技巧盲听评测</h1>
+      <h1>Prosing 歌唱技巧盲听评测</h1>
       <p class="intro">候选系统已匿名。请使用耳机，在安静环境中完成研究者分配的 24 个样本。</p>
     </div>
-    <div class="participant-panel">
-      <div class="participant-fields">
-        <label>问卷版本<select id="form-id"><option value="">请选择 A、B 或 C</option></select></label>
-        <label>听众编号<input id="participant-id" autocomplete="off" placeholder="例如 listener_01"></label>
-      </div>
-      <p id="save-status">评分会自动保存在当前浏览器。</p>
-    </div>
+    <div class="participant-panel"><p id="save-status">问卷已自动分配；评分会自动保存在当前浏览器。</p></div>
   </header>
 
   <section class="instructions">
     <h2>评分标准</h2>
     <div class="rubric-grid">
-      <div><strong>自然度 · 1–5</strong><span>歌声是否自然、连贯、无明显合成伪影。1 非常不自然，5 非常自然。</span></div>
-      <div><strong>歌手相似度 · 1–5</strong><span>生成音色与 Original source 中歌手是否一致。1 完全不匹配，5 完全匹配。</span></div>
-      <div><strong>技巧准确率 · 1–5</strong><span>要求的位置和技巧类型是否正确出现，且非目标位置没有引入错误技巧。1 完全不匹配，5 完全匹配。</span></div>
-      <div><strong>技巧质量 · 1–5</strong><span>技巧是否自然、清晰、稳定。1 很差，5 优秀。</span></div>
+      <div><strong>自然度 · 1–5</strong><span>仅评价歌声是否听感自然、连贯，以及是否存在明显失真。</span></div>
+      <div><strong>歌手相似度 · 1–5</strong><span>仅评价生成音频中的歌手与 Original source 中的歌手是否一致。</span></div>
+      <div><strong>技巧准确率 · 1–5</strong><span>仅评价目标技巧是否出现在指定的时间位置。</span></div>
+      <div><strong>技巧质量 · 1–5</strong><span>仅评价生成的技巧是否明显、自然。</span></div>
     </div>
-    <p><strong>所有指标均采用 1–5 分：</strong>中间档位表示程度逐步增加。单技巧候选统一显示四项评分以保持盲测；统计时按预注册的模型对比较。</p>
+    <p>所有指标均采用 1–5 分，1 表示表现最低，5 表示表现最高。请独立判断四项指标，不要用某一项的好坏代替另一项。</p>
   </section>
 
   <div class="toolbar">
@@ -43,7 +37,7 @@
 
   <main id="app"><p class="loading">正在加载测试清单……</p></main>
   <footer id="page-footer">评分会保存在当前浏览器；完成后请点击“上传评分”。</footer>
-  <script src="manifest.js?v=5"></script>
-  <script src="app.js?v=5"></script>
+  <script src="manifest.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

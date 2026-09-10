@@ -1,6 +1,6 @@
 {
-  "schema_version": 5,
-  "title": "ProSinger Blind Listening Evaluation",
+  "schema_version": 6,
+  "title": "Prosing Blind Listening Evaluation",
   "rating_scales": {
     "naturalness": {
       "type": "mos",

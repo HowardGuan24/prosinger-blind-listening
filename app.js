@@ -1,4 +1,4 @@
-const STORAGE_KEY = "prosinger_blind_listening_v5";
+const STORAGE_KEY = "prosing_blind_listening_v6";
 const METRIC_NAMES = {
   naturalness: "自然度",
   singer_similarity: "歌手相似度",
@@ -77,7 +77,7 @@ function render() {
   const app = document.getElementById("app");
   const visibleCases = activeCases();
   if (!visibleCases.length) {
-    app.innerHTML = '<section class="form-empty"><h2>请选择问卷版本</h2><p>请选择研究者分配的 A、B 或 C。每个版本包含每类技巧 3 个样本和 6 个复合技巧样本，共 24 个样本。</p></section>';
+    app.innerHTML = '<section class="form-empty"><h2>问卷加载失败</h2><p>请刷新页面；若问题仍然存在，请联系研究者。</p></section>';
     updateProgress();
     return;
   }
@@ -162,22 +162,14 @@ function resultPayload() {
   };
 }
 
-function requireParticipant() {
-  if (state.participant_id.trim()) return true;
-  alert("请先填写听众编号。");
-  document.getElementById("participant-id").focus();
-  return false;
-}
-
 function requireForm() {
   if (currentForm()) return true;
-  alert("请先选择问卷版本 A、B 或 C。");
-  document.getElementById("form-id").focus();
+  alert("问卷分配失败，请刷新页面或联系研究者。");
   return false;
 }
 
 async function submitResults() {
-  if (!requireForm() || !requireParticipant()) return;
+  if (!requireForm()) return;
   if (!manifest.submission_endpoint) {
     alert("评分接收接口尚未配置，请联系研究者。");
     return;
@@ -222,28 +214,22 @@ async function submitResults() {
   }
 }
 
-function initializeFormSelector() {
-  const select = document.getElementById("form-id");
-  for (const [formId, form] of Object.entries(manifest.forms)) {
-    select.insertAdjacentHTML("beforeend", `<option value="${escapeHtml(formId)}">${escapeHtml(form.label)}</option>`);
-  }
-  const queryForm = new URLSearchParams(window.location.search).get("form");
-  if (queryForm && manifest.forms[queryForm]) state.form_id = queryForm;
-  if (!manifest.forms[state.form_id]) state.form_id = "";
-  select.value = state.form_id;
-  select.addEventListener("change", event => {
-    state.form_id = event.target.value;
-    const url = new URL(window.location.href);
-    if (state.form_id) url.searchParams.set("form", state.form_id);
-    else url.searchParams.delete("form");
-    window.history.replaceState({}, "", url);
-    saveState();
-    render();
-  });
+function anonymousParticipantId() {
+  const identifier = typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID().replaceAll("-", "").slice(0, 12)
+    : `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  return `listener_${identifier}`;
 }
 
-document.getElementById("participant-id").value = state.participant_id;
-document.getElementById("participant-id").addEventListener("input", event => { state.participant_id = event.target.value.trim(); saveState(); });
+function initializeStudyAssignment() {
+  const formIds = Object.keys(manifest.forms);
+  const requestedForm = (new URLSearchParams(window.location.search).get("form") || "").toUpperCase();
+  if (manifest.forms[requestedForm]) state.form_id = requestedForm;
+  else if (!manifest.forms[state.form_id]) state.form_id = formIds[Math.floor(Math.random() * formIds.length)];
+  if (!state.participant_id) state.participant_id = anonymousParticipantId();
+  saveState();
+}
+
 document.getElementById("submit-results").addEventListener("click", submitResults);
 document.getElementById("clear-ratings").addEventListener("click", () => {
   if (!requireForm()) return;
@@ -258,7 +244,7 @@ document.getElementById("clear-ratings").addEventListener("click", () => {
 
 manifest = window.BLIND_MANIFEST;
 if (manifest) {
-  initializeFormSelector();
+  initializeStudyAssignment();
   const submitButton = document.getElementById("submit-results");
   submitButton.disabled = !manifest.submission_endpoint;
   if (!manifest.submission_endpoint) {

@@ -1,4 +1,4 @@
-# ProSinger blind listening site
+# Prosing blind listening site
 
 This directory is the **public deployment bundle**. Candidate systems are anonymized.
 
