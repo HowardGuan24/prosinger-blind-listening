@@ -1,5 +1,5 @@
 {
-  "schema_version": 6,
+  "schema_version": 7,
   "title": "Prosing Blind Listening Evaluation",
   "rating_scales": {
     "naturalness": {
@@ -74,6 +74,8 @@
   "forms": {
     "A": {
       "label": "问卷 A",
+      "language": "zh",
+      "reference_set": "zh",
       "case_ids": [
         "pharyngeal_01",
         "pharyngeal_03",
@@ -103,6 +105,8 @@
     },
     "B": {
       "label": "问卷 B",
+      "language": "zh",
+      "reference_set": "zh",
       "case_ids": [
         "pharyngeal_02",
         "pharyngeal_04",
@@ -131,7 +135,9 @@
       ]
     },
     "C": {
-      "label": "问卷 C（English）",
+      "label": "Form C (English)",
+      "language": "en",
+      "reference_set": "en",
       "case_ids": [
         "en_pharyngeal_01",
         "en_pharyngeal_02",
@@ -162,12 +168,58 @@
   },
   "submission_endpoint": "https://script.google.com/macros/s/AKfycbzjnpwUBjtUeCS-HuqIWEIKG-ZHJDfVmbRHzPSTI0mRqnGt3yufatFKb2MqWwf-plfBNQ/exec",
   "technique_references": {
-    "pharyngeal": "media/technique_references/pharyngeal.wav",
-    "breathy": "media/technique_references/breathy.wav",
-    "mix": "media/technique_references/mix.wav",
-    "falsetto": "media/technique_references/falsetto.wav",
-    "vibrato": "media/technique_references/vibrato.wav",
-    "glissando": "media/technique_references/glissando.wav"
+    "zh": {
+      "pharyngeal": {
+        "control": "media/technique_references/zh/pharyngeal/control.wav",
+        "technique": "media/technique_references/zh/pharyngeal/technique.wav"
+      },
+      "breathy": {
+        "control": "media/technique_references/zh/breathy/control.wav",
+        "technique": "media/technique_references/zh/breathy/technique.wav"
+      },
+      "mix": {
+        "control": "media/technique_references/zh/mix/control.wav",
+        "technique": "media/technique_references/zh/mix/technique.wav"
+      },
+      "falsetto": {
+        "control": "media/technique_references/zh/falsetto/control.wav",
+        "technique": "media/technique_references/zh/falsetto/technique.wav"
+      },
+      "vibrato": {
+        "control": "media/technique_references/zh/vibrato/control.wav",
+        "technique": "media/technique_references/zh/vibrato/technique.wav"
+      },
+      "glissando": {
+        "control": "media/technique_references/zh/glissando/control.wav",
+        "technique": "media/technique_references/zh/glissando/technique.wav"
+      }
+    },
+    "en": {
+      "pharyngeal": {
+        "control": "media/technique_references/en/pharyngeal/control.wav",
+        "technique": "media/technique_references/en/pharyngeal/technique.wav"
+      },
+      "breathy": {
+        "control": "media/technique_references/en/breathy/control.wav",
+        "technique": "media/technique_references/en/breathy/technique.wav"
+      },
+      "mix": {
+        "control": "media/technique_references/en/mix/control.wav",
+        "technique": "media/technique_references/en/mix/technique.wav"
+      },
+      "falsetto": {
+        "control": "media/technique_references/en/falsetto/control.wav",
+        "technique": "media/technique_references/en/falsetto/technique.wav"
+      },
+      "vibrato": {
+        "control": "media/technique_references/en/vibrato/control.wav",
+        "technique": "media/technique_references/en/vibrato/technique.wav"
+      },
+      "glissando": {
+        "control": "media/technique_references/en/glissando/control.wav",
+        "technique": "media/technique_references/en/glissando/technique.wav"
+      }
+    }
   },
   "technique_names": {
     "pharyngeal": "咽音 Pharyngeal",
@@ -176,6 +228,14 @@
     "falsetto": "假声 Falsetto",
     "vibrato": "颤音 Vibrato",
     "glissando": "滑音 Glissando"
+  },
+  "technique_names_english": {
+    "pharyngeal": "Pharyngeal",
+    "breathy": "Breathy",
+    "mix": "Mixed voice",
+    "falsetto": "Falsetto",
+    "vibrato": "Vibrato",
+    "glissando": "Glissando"
   },
   "primary_analysis": {
     "naturalness_and_singer_similarity": [

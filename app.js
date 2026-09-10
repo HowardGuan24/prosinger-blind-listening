@@ -5,6 +5,12 @@ const METRIC_NAMES = {
   technique_accuracy: "技巧准确率",
   technique_quality: "技巧质量",
 };
+const METRIC_NAMES_ENGLISH = {
+  naturalness: "Naturalness",
+  singer_similarity: "Singer similarity",
+  technique_accuracy: "Technique accuracy",
+  technique_quality: "Technique quality",
+};
 
 let manifest = null;
 let state = loadState();
@@ -34,6 +40,19 @@ function currentForm() {
   return manifest && manifest.forms ? manifest.forms[state.form_id] : null;
 }
 
+function currentLanguage() {
+  const form = currentForm();
+  return form && form.language === "en" ? "en" : "zh";
+}
+
+function localized(chinese, english) {
+  return currentLanguage() === "en" ? english : chinese;
+}
+
+function metricName(metric) {
+  return currentLanguage() === "en" ? METRIC_NAMES_ENGLISH[metric] : METRIC_NAMES[metric];
+}
+
 function activeCases() {
   const form = currentForm();
   if (!form) return [];
@@ -47,10 +66,10 @@ function scoreControl(caseId, candidateId, metric) {
   const scale = manifest.rating_scales[metric];
   const buttons = scale.values.map(score => {
     const scaleLabel = scale.labels[String(score)];
-    const accessibleLabel = `${METRIC_NAMES[metric]}：${scaleLabel}`;
+    const accessibleLabel = `${metricName(metric)}: ${scaleLabel}`;
     return `<label><input type="radio" name="${escapeHtml(key)}" value="${score}" aria-label="${escapeHtml(accessibleLabel)}" ${Number(selected) === score ? "checked" : ""}><b title="${escapeHtml(scaleLabel)}">${score}</b></label>`;
   }).join("");
-  return `<div class="score-row"><span>${METRIC_NAMES[metric]}</span><div class="score-buttons" style="--score-count:${scale.values.length}" data-rating-key="${escapeHtml(key)}">${buttons}</div></div>`;
+  return `<div class="score-row"><span>${metricName(metric)}</span><div class="score-buttons" style="--score-count:${scale.values.length}" data-rating-key="${escapeHtml(key)}">${buttons}</div></div>`;
 }
 
 function candidateCell(testCase, candidate) {
@@ -58,19 +77,32 @@ function candidateCell(testCase, candidate) {
 }
 
 function caseRow(testCase, candidateCount) {
-  const details = `${testCase.lyrics ? `<p><strong>歌词：</strong>${escapeHtml(testCase.lyrics)}</p>` : ""}<p><strong>技巧：</strong>${escapeHtml(testCase.instruction)}</p>`;
+  const lyricsLabel = localized("歌词", "Lyrics");
+  const techniqueLabel = localized("技巧", "Technique");
+  const notesLabel = localized("可选备注", "Optional notes");
+  const details = `${testCase.lyrics ? `<p><strong>${lyricsLabel}：</strong>${escapeHtml(testCase.lyrics)}</p>` : ""}<p><strong>${techniqueLabel}：</strong>${escapeHtml(testCase.instruction)}</p>`;
   const cells = testCase.candidates.map(candidate => candidateCell(testCase, candidate)).join("");
   const padding = Array.from({length: candidateCount - testCase.candidates.length}, () => "<td></td>").join("");
-  return `<tr data-case-id="${escapeHtml(testCase.case_id)}"><td class="case-info"><h3>${escapeHtml(testCase.title)}</h3>${details}<textarea class="notes" data-note-key="${escapeHtml(testCase.case_id)}" placeholder="可选备注">${escapeHtml(state.notes[testCase.case_id] || "")}</textarea></td><td class="source-cell"><strong>Original source</strong>${audioPlayer(testCase.source_audio)}</td>${cells}${padding}</tr>`;
+  return `<tr data-case-id="${escapeHtml(testCase.case_id)}"><td class="case-info"><h3>${escapeHtml(testCase.title)}</h3>${details}<textarea class="notes" data-note-key="${escapeHtml(testCase.case_id)}" placeholder="${notesLabel}">${escapeHtml(state.notes[testCase.case_id] || "")}</textarea></td><td class="source-cell"><strong>Original source</strong>${audioPlayer(testCase.source_audio)}</td>${cells}${padding}</tr>`;
 }
 
 function tableForCases(cases) {
   if (!cases.length) return "";
   const candidateCount = Math.max(...cases.map(item => item.candidates.length));
-  const candidateHeaders = Array.from({length: candidateCount}, (_, index) => `<th>匿名候选 ${String.fromCharCode(65 + index)}</th>`).join("");
+  const candidateHeaders = Array.from({length: candidateCount}, (_, index) => `<th>${localized("匿名候选", "Candidate")} ${String.fromCharCode(65 + index)}</th>`).join("");
   const candidateColumns = Array.from({length: candidateCount}, () => '<col class="candidate-column">').join("");
   const candidateWidth = (65 / candidateCount).toFixed(4);
-  return `<div class="table-wrap"><table style="--candidate-width:${candidateWidth}%"><colgroup><col class="case-column"><col class="source-column">${candidateColumns}</colgroup><thead><tr><th>样本与要求</th><th>原始音频</th>${candidateHeaders}</tr></thead><tbody>${cases.map(item => caseRow(item, candidateCount)).join("")}</tbody></table></div>`;
+  return `<div class="table-wrap"><table style="--candidate-width:${candidateWidth}%"><colgroup><col class="case-column"><col class="source-column">${candidateColumns}</colgroup><thead><tr><th>${localized("样本与要求", "Sample and instruction")}</th><th>${localized("原始音频", "Original source")}</th>${candidateHeaders}</tr></thead><tbody>${cases.map(item => caseRow(item, candidateCount)).join("")}</tbody></table></div>`;
+}
+
+function referenceCard(technique) {
+  const form = currentForm();
+  const referenceSet = form && form.reference_set ? form.reference_set : "zh";
+  const reference = manifest.technique_references[referenceSet][technique];
+  const title = localized("对照参考", "Paired references");
+  const controlLabel = localized("无技巧（Control）", "Control (no technique)");
+  const techniqueLabel = localized("有技巧（Technique）", "Technique");
+  return `<div class="tech-reference"><strong>${title}</strong><div class="reference-pair"><div class="reference-item"><span>${controlLabel}</span>${audioPlayer(reference.control)}</div><div class="reference-item"><span>${techniqueLabel}</span>${audioPlayer(reference.technique)}</div></div></div>`;
 }
 
 function render() {
@@ -82,12 +114,13 @@ function render() {
     return;
   }
   const sections = [];
-  for (const [technique, techniqueName] of Object.entries(manifest.technique_names)) {
+  const techniqueNames = currentLanguage() === "en" ? manifest.technique_names_english : manifest.technique_names;
+  for (const [technique, techniqueName] of Object.entries(techniqueNames)) {
     const cases = visibleCases.filter(item => item.kind === "single" && item.technique === technique);
-    sections.push(`<section><div class="section-heading"><h2>${escapeHtml(techniqueName)}</h2><div class="tech-reference"><strong>技巧参考 Technique reference</strong>${audioPlayer(manifest.technique_references[technique])}</div></div>${tableForCases(cases)}</section>`);
+    sections.push(`<section><div class="section-heading"><h2>${escapeHtml(techniqueName)}</h2>${referenceCard(technique)}</div>${tableForCases(cases)}</section>`);
   }
   const compositeCases = visibleCases.filter(item => item.kind === "composite");
-  sections.push(`<section><div class="section-heading"><h2>复合技巧 Composite techniques</h2><p>请结合歌词和技巧分配，评价候选歌声的技巧准确率与技巧质量。</p></div>${tableForCases(compositeCases)}</section>`);
+  sections.push(`<section><div class="section-heading"><h2>${localized("复合技巧", "Composite techniques")}</h2><p>${localized("请结合歌词和技巧分配，评价候选歌声的技巧准确率与技巧质量。", "Evaluate technique accuracy and quality using the lyrics and assigned technique program.")}</p></div>${tableForCases(compositeCases)}</section>`);
   app.innerHTML = sections.join("");
   bindInputs();
   updateProgress();
