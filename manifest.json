@@ -2207,7 +2207,7 @@
       "kind": "single",
       "title": "样本 3",
       "lyrics": "IM ON YOUR SIDE",
-      "instruction": "YOUR: source-relative pitch delta +200→-200 cents.",
+      "instruction": "YOUR: source-relative pitch delta +400→0 cents.",
       "source_audio": "media/cases/en_glissando_03/source.wav",
       "candidates": [
         {
