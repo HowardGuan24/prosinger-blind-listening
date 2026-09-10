@@ -36,15 +36,13 @@
   <div class="toolbar">
     <div class="progress-copy"><strong id="progress-text">0 / 24</strong><span> 个样本完成</span></div>
     <progress id="progress-bar" value="0" max="1"></progress>
-    <button id="submit-results" type="button">提交评分</button>
-    <button id="export-json" type="button">导出 JSON</button>
-    <button id="export-csv" type="button">导出 CSV</button>
+    <button id="submit-results" type="button">上传评分</button>
     <button id="clear-ratings" class="secondary" type="button">清空评分</button>
     <span id="submission-status" class="submission-status" role="status"></span>
   </div>
 
   <main id="app"><p class="loading">正在加载测试清单……</p></main>
-  <footer id="page-footer">评分保存在当前浏览器；提交成功前可导出 JSON 或 CSV 作为备份。</footer>
+  <footer id="page-footer">评分会保存在当前浏览器；完成后请点击“上传评分”。</footer>
   <script src="manifest.js"></script>
   <script src="app.js"></script>
 </body>

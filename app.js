@@ -158,15 +158,6 @@ function resultPayload() {
   };
 }
 
-function download(name, content, mime) {
-  const blob = new Blob([content], {type: mime});
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = name;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-}
-
 function requireParticipant() {
   if (state.participant_id.trim()) return true;
   alert("请先填写听众编号。");
@@ -181,15 +172,10 @@ function requireForm() {
   return false;
 }
 
-function csvEscape(value) {
-  const text = String(value === undefined || value === null ? "" : value);
-  return /[",\n]/.test(text) ? `"${text.split('"').join('""')}"` : text;
-}
-
 async function submitResults() {
   if (!requireForm() || !requireParticipant()) return;
   if (!manifest.submission_endpoint) {
-    alert("评分接收接口尚未配置。请先导出 JSON 或 CSV 作为备份。");
+    alert("评分接收接口尚未配置，请联系研究者。");
     return;
   }
   const total = activeCases().length;
@@ -226,7 +212,7 @@ async function submitResults() {
     status.textContent = "提交成功，感谢参与。";
   } catch (error) {
     status.className = "submission-status error";
-    status.textContent = `提交失败（${error.message}），请导出 JSON 备份。`;
+    status.textContent = `上传失败（${error.message}），评分仍保存在当前浏览器，请稍后重试。`;
   } finally {
     button.disabled = !manifest.submission_endpoint;
   }
@@ -255,17 +241,6 @@ function initializeFormSelector() {
 document.getElementById("participant-id").value = state.participant_id;
 document.getElementById("participant-id").addEventListener("input", event => { state.participant_id = event.target.value.trim(); saveState(); });
 document.getElementById("submit-results").addEventListener("click", submitResults);
-document.getElementById("export-json").addEventListener("click", () => {
-  if (!requireForm() || !requireParticipant()) return;
-  download(`prosinger_blind_${state.form_id}_${state.participant_id}.json`, JSON.stringify(resultPayload(), null, 2), "application/json");
-});
-document.getElementById("export-csv").addEventListener("click", () => {
-  if (!requireForm() || !requireParticipant()) return;
-  const rows = resultPayload().rows;
-  const fields = Object.keys(rows[0]);
-  const csv = [fields.join(","), ...rows.map(row => fields.map(field => csvEscape(row[field])).join(","))].join("\n");
-  download(`prosinger_blind_${state.form_id}_${state.participant_id}.csv`, csv, "text/csv;charset=utf-8");
-});
 document.getElementById("clear-ratings").addEventListener("click", () => {
   if (!requireForm()) return;
   if (!confirm(`确认清空问卷 ${state.form_id} 的评分和备注？`)) return;
@@ -284,7 +259,7 @@ if (manifest) {
   submitButton.disabled = !manifest.submission_endpoint;
   if (!manifest.submission_endpoint) {
     document.getElementById("submission-status").textContent = "在线提交接口待配置";
-    document.getElementById("page-footer").textContent = "当前部署尚未配置写入端点；请导出 JSON 或 CSV 交给研究者。";
+    document.getElementById("page-footer").textContent = "当前部署尚未配置写入端点，请联系研究者。";
   }
   render();
 }
