@@ -65,7 +65,7 @@
       ]
     }
   },
-  "submission_endpoint": "",
+  "submission_endpoint": "https://script.google.com/macros/s/AKfycbzjnpwUBjtUeCS-HuqIWEIKG-ZHJDfVmbRHzPSTI0mRqnGt3yufatFKb2MqWwf-plfBNQ/exec",
   "technique_references": {
     "pharyngeal": "media/technique_references/pharyngeal.wav",
     "breathy": "media/technique_references/breathy.wav",
