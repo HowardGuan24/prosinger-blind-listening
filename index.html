@@ -4,42 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Prosing Blind Listening Evaluation</title>
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <header class="page-header">
     <div>
-      <h1>Prosing 歌唱技巧盲听评测</h1>
-      <p class="intro">请使用耳机，在安静环境中完成 24 个样本打分，大约需要 15 分钟。</p>
+      <h1 id="page-title">Prosing 歌唱技巧盲听评测</h1>
+      <p id="page-intro" class="intro">请使用耳机，在安静环境中完成 24 个样本打分，大约需要 15 分钟。</p>
     </div>
   </header>
 
   <section class="instructions">
     <div class="study-guide">
-      <h2>评测指引</h2>
-      <p>本次测评包含六组单一技巧转换评测和六条复合技巧转换评测。每个单一技巧组均提供一段由专业歌手演唱的对应技巧参考音频。请先听参考音频，再对匿名候选结果进行评分。完成所有结果的评分后，请点击“上传评分”按钮。</p>
+      <h2 id="guide-title">评测指引</h2>
+      <p id="guide-copy">本次测评包含六组单一技巧转换评测和六条复合技巧转换评测。每个单一技巧组均提供一段由专业歌手演唱的对应技巧参考音频。请先听参考音频，再对匿名候选结果进行评分。完成所有结果的评分后，请点击“上传评分”按钮。</p>
     </div>
-    <h2>评分标准</h2>
+    <h2 id="criteria-title">评分标准</h2>
     <div class="rubric-grid">
-      <div><strong>自然度 · 1–5</strong><span>仅评价歌声是否听感自然、连贯，以及是否存在明显失真。</span></div>
-      <div><strong>歌手相似度 · 1–5</strong><span>仅评价生成音频中的歌手与 Original source 中的歌手是否一致。</span></div>
-      <div><strong>技巧准确率 · 1–5</strong><span>仅评价目标技巧是否出现在指定的时间位置。</span></div>
-      <div><strong>技巧质量 · 1–5</strong><span>仅评价生成的技巧是否明显、自然。</span></div>
+      <div><strong id="naturalness-title">自然度 · 1–5</strong><span id="naturalness-copy">仅评价歌声是否听感自然、连贯，以及是否存在明显失真。</span></div>
+      <div><strong id="similarity-title">歌手相似度 · 1–5</strong><span id="similarity-copy">仅评价生成音频中的歌手与原始音频中的歌手是否一致。</span></div>
+      <div><strong id="accuracy-title">技巧准确率 · 1–5</strong><span id="accuracy-copy">仅评价目标技巧是否出现在指定的时间位置。</span></div>
+      <div><strong id="quality-title">技巧质量 · 1–5</strong><span id="quality-copy">仅评价生成的技巧是否明显、自然。</span></div>
     </div>
-    <p>所有指标均采用 1–5 分，1 表示表现最低，5 表示表现最高。请独立判断四项指标，不要用某一项的好坏代替另一项。</p>
+    <p id="scale-copy">所有指标均采用 1–5 分，1 表示表现最低，5 表示表现最高。请独立判断四项指标，不要用某一项的好坏代替另一项。</p>
   </section>
 
   <div class="toolbar">
-    <div class="progress-copy"><strong id="progress-text">0 / 24</strong><span> 个样本完成</span></div>
+    <div class="progress-copy"><strong id="progress-text">0 / 24</strong><span id="progress-unit"> 个样本完成</span></div>
     <progress id="progress-bar" value="0" max="1"></progress>
     <button id="submit-results" type="button">上传评分</button>
     <button id="clear-ratings" class="secondary" type="button">清空评分</button>
     <span id="submission-status" class="submission-status" role="status"></span>
   </div>
 
-  <main id="app"><p class="loading">正在加载测试清单……</p></main>
+  <main id="app"><p id="loading-copy" class="loading">正在加载测试清单……</p></main>
   <footer id="page-footer">评分会保存在当前浏览器；完成后请点击“上传评分”。</footer>
-  <script src="manifest.js?v=11"></script>
-  <script src="app.js?v=11"></script>
+  <script src="manifest.js?v=12"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
