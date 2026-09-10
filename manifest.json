@@ -1234,6 +1234,54 @@
       ]
     },
     {
+      "case_id": "combo_11_xiangziyou",
+      "kind": "composite",
+      "title": "想自由：滑音+假声/咽音",
+      "lyrics": "我们才会瞬间就不快乐",
+      "instruction": "才：+200→0 cents 滑音并叠加假声；不快乐：咽音",
+      "source_audio": "media/cases/combo_11_xiangziyou/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_133914f41d59ed",
+          "display_label": "Candidate A",
+          "audio": "media/cases/combo_11_xiangziyou/cand_133914f41d59ed.wav"
+        },
+        {
+          "candidate_id": "cand_f258639201f664",
+          "display_label": "Candidate B",
+          "audio": "media/cases/combo_11_xiangziyou/cand_f258639201f664.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "combo_12_dayu",
+      "kind": "composite",
+      "title": "大鱼：咽音+颤音/气声",
+      "lyrics": "看你飞远去，看你离我而去",
+      "instruction": "飞远去：咽音；飞：±20 cents、5 Hz 颤音；看你离我而去：气声",
+      "source_audio": "media/cases/combo_12_dayu/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_55d787a17eea1b",
+          "display_label": "Candidate A",
+          "audio": "media/cases/combo_12_dayu/cand_55d787a17eea1b.wav"
+        },
+        {
+          "candidate_id": "cand_c2b56335e6f3ee",
+          "display_label": "Candidate B",
+          "audio": "media/cases/combo_12_dayu/cand_c2b56335e6f3ee.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
       "case_id": "gliss_01_hui",
       "kind": "single",
       "title": "滑音 1 · 会",
