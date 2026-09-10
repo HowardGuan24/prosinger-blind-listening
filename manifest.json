@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "title": "ProSinger Blind Listening Evaluation",
   "rating_scales": {
     "naturalness": {
@@ -124,6 +124,35 @@
         "combo_08_luoyeguigen",
         "combo_10_yuai",
         "combo_12_dayu"
+      ]
+    },
+    "C": {
+      "label": "问卷 C（English）",
+      "case_ids": [
+        "en_pharyngeal_01",
+        "en_pharyngeal_02",
+        "en_pharyngeal_03",
+        "en_breathy_01",
+        "en_breathy_02",
+        "en_breathy_03",
+        "en_mix_01",
+        "en_mix_02",
+        "en_mix_03",
+        "en_falsetto_01",
+        "en_falsetto_02",
+        "en_falsetto_03",
+        "en_vibrato_01",
+        "en_vibrato_02",
+        "en_vibrato_03",
+        "en_glissando_01",
+        "en_glissando_02",
+        "en_glissando_03",
+        "en_combo_01",
+        "en_combo_02",
+        "en_combo_03",
+        "en_combo_04",
+        "en_combo_05",
+        "en_combo_06"
       ]
     }
   },
@@ -1604,6 +1633,744 @@
       "metrics": [
         "naturalness",
         "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_pharyngeal_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "I SAID DONT MIND BUT WHAT DO YOU MEAN I AM THE ONE",
+      "instruction": "Apply pharyngeal globally.",
+      "source_audio": "media/cases/en_pharyngeal_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_b4628dd884cf9a",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_pharyngeal_01/cand_b4628dd884cf9a.wav"
+        },
+        {
+          "candidate_id": "cand_5c3b73eada24f6",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_pharyngeal_01/cand_5c3b73eada24f6.wav"
+        },
+        {
+          "candidate_id": "cand_50320b3e44ace7",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_pharyngeal_01/cand_50320b3e44ace7.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "pharyngeal",
+      "technique_name": "咽音 Pharyngeal"
+    },
+    {
+      "case_id": "en_pharyngeal_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "WHISPER WORDS OF WISDOM LET IT BE",
+      "instruction": "Apply pharyngeal globally.",
+      "source_audio": "media/cases/en_pharyngeal_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_c0b0aef72c46bd",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_pharyngeal_02/cand_c0b0aef72c46bd.wav"
+        },
+        {
+          "candidate_id": "cand_397aeba163b9ef",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_pharyngeal_02/cand_397aeba163b9ef.wav"
+        },
+        {
+          "candidate_id": "cand_eb8b56b7f9865a",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_pharyngeal_02/cand_eb8b56b7f9865a.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "pharyngeal",
+      "technique_name": "咽音 Pharyngeal"
+    },
+    {
+      "case_id": "en_pharyngeal_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "NEAR FAR WHEREVER YOU ARE",
+      "instruction": "Apply pharyngeal globally.",
+      "source_audio": "media/cases/en_pharyngeal_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_557adcc8043954",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_pharyngeal_03/cand_557adcc8043954.wav"
+        },
+        {
+          "candidate_id": "cand_b0ff6b585c2ac3",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_pharyngeal_03/cand_b0ff6b585c2ac3.wav"
+        },
+        {
+          "candidate_id": "cand_0fa751e7397434",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_pharyngeal_03/cand_0fa751e7397434.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "pharyngeal",
+      "technique_name": "咽音 Pharyngeal"
+    },
+    {
+      "case_id": "en_breathy_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "TAKE A SAD SONG AND MAKE IT BETTER",
+      "instruction": "Apply breathy globally.",
+      "source_audio": "media/cases/en_breathy_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_c934ed5e0064a3",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_breathy_01/cand_c934ed5e0064a3.wav"
+        },
+        {
+          "candidate_id": "cand_310fb9d3d99368",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_breathy_01/cand_310fb9d3d99368.wav"
+        },
+        {
+          "candidate_id": "cand_c0c37385100c95",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_breathy_01/cand_c0c37385100c95.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "breathy",
+      "technique_name": "气声 Breathy"
+    },
+    {
+      "case_id": "en_breathy_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "HOW DEEP IS YOUR LOVE",
+      "instruction": "Apply breathy globally.",
+      "source_audio": "media/cases/en_breathy_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_09e51181862185",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_breathy_02/cand_09e51181862185.wav"
+        },
+        {
+          "candidate_id": "cand_deff59bedc6471",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_breathy_02/cand_deff59bedc6471.wav"
+        },
+        {
+          "candidate_id": "cand_425dc7355dde6b",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_breathy_02/cand_425dc7355dde6b.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "breathy",
+      "technique_name": "气声 Breathy"
+    },
+    {
+      "case_id": "en_breathy_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "ON THIS ENDLESS OCEAN FINALLY LOVERS KNOW NO SHAME",
+      "instruction": "Apply breathy globally.",
+      "source_audio": "media/cases/en_breathy_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_61fef4018f0b0d",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_breathy_03/cand_61fef4018f0b0d.wav"
+        },
+        {
+          "candidate_id": "cand_e96b5072b5f235",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_breathy_03/cand_e96b5072b5f235.wav"
+        },
+        {
+          "candidate_id": "cand_e66be6a7878673",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_breathy_03/cand_e66be6a7878673.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "breathy",
+      "technique_name": "气声 Breathy"
+    },
+    {
+      "case_id": "en_falsetto_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "THEN YOU COME TO ME ON A SUMMER BREEZE",
+      "instruction": "Apply falsetto globally.",
+      "source_audio": "media/cases/en_falsetto_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_a23ab9b0b53a7d",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_falsetto_01/cand_a23ab9b0b53a7d.wav"
+        },
+        {
+          "candidate_id": "cand_ea7370b1431b2d",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_falsetto_01/cand_ea7370b1431b2d.wav"
+        },
+        {
+          "candidate_id": "cand_d11c89616dc685",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_falsetto_01/cand_d11c89616dc685.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "falsetto",
+      "technique_name": "假声 Falsetto"
+    },
+    {
+      "case_id": "en_falsetto_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "YOU KNOW IM SUCH A FOOL FOR YOU",
+      "instruction": "Apply falsetto globally.",
+      "source_audio": "media/cases/en_falsetto_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_548262c1c15bd3",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_falsetto_02/cand_548262c1c15bd3.wav"
+        },
+        {
+          "candidate_id": "cand_4960e8392d02ef",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_falsetto_02/cand_4960e8392d02ef.wav"
+        },
+        {
+          "candidate_id": "cand_d553f86fa20e72",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_falsetto_02/cand_d553f86fa20e72.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "falsetto",
+      "technique_name": "假声 Falsetto"
+    },
+    {
+      "case_id": "en_falsetto_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "HEY JUDE DONT MAKE IT BAD",
+      "instruction": "Apply falsetto globally.",
+      "source_audio": "media/cases/en_falsetto_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_fb1bcb11187f16",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_falsetto_03/cand_fb1bcb11187f16.wav"
+        },
+        {
+          "candidate_id": "cand_7f6588112b3e2c",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_falsetto_03/cand_7f6588112b3e2c.wav"
+        },
+        {
+          "candidate_id": "cand_04d2abf3425466",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_falsetto_03/cand_04d2abf3425466.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "falsetto",
+      "technique_name": "假声 Falsetto"
+    },
+    {
+      "case_id": "en_mix_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "SO MANY NIGHTS",
+      "instruction": "Apply mix globally.",
+      "source_audio": "media/cases/en_mix_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_b2939cd27bb9a8",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_mix_01/cand_b2939cd27bb9a8.wav"
+        },
+        {
+          "candidate_id": "cand_d58506190d2761",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_mix_01/cand_d58506190d2761.wav"
+        },
+        {
+          "candidate_id": "cand_7951fe9d24e21f",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_mix_01/cand_7951fe9d24e21f.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "mix",
+      "technique_name": "混声 Mixed voice"
+    },
+    {
+      "case_id": "en_mix_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "HEY JUDE DONT MAKE IT BAD",
+      "instruction": "Apply mix globally.",
+      "source_audio": "media/cases/en_mix_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_e75209952907f0",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_mix_02/cand_e75209952907f0.wav"
+        },
+        {
+          "candidate_id": "cand_f1064010cab659",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_mix_02/cand_f1064010cab659.wav"
+        },
+        {
+          "candidate_id": "cand_02e51a1207ef52",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_mix_02/cand_02e51a1207ef52.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "mix",
+      "technique_name": "混声 Mixed voice"
+    },
+    {
+      "case_id": "en_mix_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "IF YOU IF YOU COULD RETURN",
+      "instruction": "Apply mix globally.",
+      "source_audio": "media/cases/en_mix_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_d8efdc37f566a8",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_mix_03/cand_d8efdc37f566a8.wav"
+        },
+        {
+          "candidate_id": "cand_3e8fa45b6252e8",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_mix_03/cand_3e8fa45b6252e8.wav"
+        },
+        {
+          "candidate_id": "cand_3d5d32af8ff67d",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_mix_03/cand_3d5d32af8ff67d.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "mix",
+      "technique_name": "混声 Mixed voice"
+    },
+    {
+      "case_id": "en_vibrato_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "TAKE A SAD SONG AND MAKE IT BETTER",
+      "instruction": "SONG: vibrato (20 cents, 5 Hz).",
+      "source_audio": "media/cases/en_vibrato_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_ead9756003aa28",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_vibrato_01/cand_ead9756003aa28.wav"
+        },
+        {
+          "candidate_id": "cand_0c79585edd9c4c",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_vibrato_01/cand_0c79585edd9c4c.wav"
+        },
+        {
+          "candidate_id": "cand_8c4ab464d5bbec",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_vibrato_01/cand_8c4ab464d5bbec.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "vibrato",
+      "technique_name": "颤音 Vibrato"
+    },
+    {
+      "case_id": "en_vibrato_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "I FEEL YOU",
+      "instruction": "FEEL: vibrato (20 cents, 5 Hz).",
+      "source_audio": "media/cases/en_vibrato_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_9194a94eb69767",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_vibrato_02/cand_9194a94eb69767.wav"
+        },
+        {
+          "candidate_id": "cand_96815d8b25d5c7",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_vibrato_02/cand_96815d8b25d5c7.wav"
+        },
+        {
+          "candidate_id": "cand_76cab69a85c583",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_vibrato_02/cand_76cab69a85c583.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "vibrato",
+      "technique_name": "颤音 Vibrato"
+    },
+    {
+      "case_id": "en_vibrato_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "EVERY NOW AND THEN I FALL APART",
+      "instruction": "APART: vibrato (20 cents, 5 Hz).",
+      "source_audio": "media/cases/en_vibrato_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_7e06e008d39ffd",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_vibrato_03/cand_7e06e008d39ffd.wav"
+        },
+        {
+          "candidate_id": "cand_854871c5d4d04b",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_vibrato_03/cand_854871c5d4d04b.wav"
+        },
+        {
+          "candidate_id": "cand_85cee231fb30c8",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_vibrato_03/cand_85cee231fb30c8.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "vibrato",
+      "technique_name": "颤音 Vibrato"
+    },
+    {
+      "case_id": "en_glissando_01",
+      "kind": "single",
+      "title": "样本 1",
+      "lyrics": "SO WHY WERE YOU HOLDING HER HAND",
+      "instruction": "WERE: source-relative pitch delta +200→0 cents.",
+      "source_audio": "media/cases/en_glissando_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_a1ce13c1455bab",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_glissando_01/cand_a1ce13c1455bab.wav"
+        },
+        {
+          "candidate_id": "cand_adc583b649b35f",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_glissando_01/cand_adc583b649b35f.wav"
+        },
+        {
+          "candidate_id": "cand_cac5319cf8ef8a",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_glissando_01/cand_cac5319cf8ef8a.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "glissando",
+      "technique_name": "滑音 Glissando"
+    },
+    {
+      "case_id": "en_glissando_02",
+      "kind": "single",
+      "title": "样本 2",
+      "lyrics": "OH SEE THAT GIRL WATCH THAT SCENE",
+      "instruction": "GIRL: source-relative pitch delta -200→0 cents.",
+      "source_audio": "media/cases/en_glissando_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_a23d57cfa74430",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_glissando_02/cand_a23d57cfa74430.wav"
+        },
+        {
+          "candidate_id": "cand_fb253ad5a06390",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_glissando_02/cand_fb253ad5a06390.wav"
+        },
+        {
+          "candidate_id": "cand_4f2198e4b3153d",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_glissando_02/cand_4f2198e4b3153d.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "glissando",
+      "technique_name": "滑音 Glissando"
+    },
+    {
+      "case_id": "en_glissando_03",
+      "kind": "single",
+      "title": "样本 3",
+      "lyrics": "IM ON YOUR SIDE",
+      "instruction": "YOUR: source-relative pitch delta +300→0 cents.",
+      "source_audio": "media/cases/en_glissando_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_3a113ea128658b",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_glissando_03/cand_3a113ea128658b.wav"
+        },
+        {
+          "candidate_id": "cand_8b16fe5bc6fc20",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_glissando_03/cand_8b16fe5bc6fc20.wav"
+        },
+        {
+          "candidate_id": "cand_b886c3bb6c8c94",
+          "display_label": "Candidate C",
+          "audio": "media/cases/en_glissando_03/cand_b886c3bb6c8c94.wav"
+        }
+      ],
+      "metrics": [
+        "naturalness",
+        "singer_similarity",
+        "technique_accuracy",
+        "technique_quality"
+      ],
+      "technique": "glissando",
+      "technique_name": "滑音 Glissando"
+    },
+    {
+      "case_id": "en_combo_01",
+      "kind": "composite",
+      "title": "样本 1",
+      "lyrics": "NEAR FAR WHEREVER YOU ARE",
+      "instruction": "NEAR and FAR: breathy; FAR: vibrato; WHEREVER YOU ARE: pharyngeal.",
+      "source_audio": "media/cases/en_combo_01/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_7963932186e6b4",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_01/cand_7963932186e6b4.wav"
+        },
+        {
+          "candidate_id": "cand_92b31a7c62e84a",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_01/cand_92b31a7c62e84a.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_combo_02",
+      "kind": "composite",
+      "title": "样本 2",
+      "lyrics": "BABY YOU WOULD TAKE AWAY EVERYTHING GOOD IN MY LIFE",
+      "instruction": "EVERYTHING: pharyngeal + falsetto; GOOD IN MY LIFE: falsetto.",
+      "source_audio": "media/cases/en_combo_02/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_34c8ca05ce60cd",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_02/cand_34c8ca05ce60cd.wav"
+        },
+        {
+          "candidate_id": "cand_b33013b0e222f3",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_02/cand_b33013b0e222f3.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_combo_03",
+      "kind": "composite",
+      "title": "样本 3",
+      "lyrics": "YOU AND I MUST MAKE A PACT",
+      "instruction": "YOU AND I: pharyngeal; I and PACT: vibrato; MAKE: falsetto.",
+      "source_audio": "media/cases/en_combo_03/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_b6d4de3acf1001",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_03/cand_b6d4de3acf1001.wav"
+        },
+        {
+          "candidate_id": "cand_6f5d39cb2d809e",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_03/cand_6f5d39cb2d809e.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_combo_04",
+      "kind": "composite",
+      "title": "样本 4",
+      "lyrics": "I WILL ALWAYS LOVE YOU",
+      "instruction": "LOVE: falsetto + breathy; YOU: mix, with vibrato on its final third.",
+      "source_audio": "media/cases/en_combo_04/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_8b309e09cc6e88",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_04/cand_8b309e09cc6e88.wav"
+        },
+        {
+          "candidate_id": "cand_bb3385197f2766",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_04/cand_bb3385197f2766.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_combo_05",
+      "kind": "composite",
+      "title": "样本 5",
+      "lyrics": "YOU WERE ALWAYS CRAZY LIKE THAT",
+      "instruction": "Apply falsetto and breathy globally.",
+      "source_audio": "media/cases/en_combo_05/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_a52f471bf4ed5d",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_05/cand_a52f471bf4ed5d.wav"
+        },
+        {
+          "candidate_id": "cand_72abf4c383eb35",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_05/cand_72abf4c383eb35.wav"
+        }
+      ],
+      "metrics": [
+        "technique_accuracy",
+        "technique_quality"
+      ]
+    },
+    {
+      "case_id": "en_combo_06",
+      "kind": "composite",
+      "title": "样本 6",
+      "lyrics": "SO MANY NIGHTS ID SIT BY MY WINDOW",
+      "instruction": "SO MANY: breathy; first syllable of MANY: source-relative pitch delta -300→0 cents.",
+      "source_audio": "media/cases/en_combo_06/source.wav",
+      "candidates": [
+        {
+          "candidate_id": "cand_4063385a97890a",
+          "display_label": "Candidate A",
+          "audio": "media/cases/en_combo_06/cand_4063385a97890a.wav"
+        },
+        {
+          "candidate_id": "cand_c56fd305e44151",
+          "display_label": "Candidate B",
+          "audio": "media/cases/en_combo_06/cand_c56fd305e44151.wav"
+        }
+      ],
+      "metrics": [
         "technique_accuracy",
         "technique_quality"
       ]

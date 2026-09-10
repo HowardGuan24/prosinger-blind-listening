@@ -77,7 +77,7 @@ function render() {
   const app = document.getElementById("app");
   const visibleCases = activeCases();
   if (!visibleCases.length) {
-    app.innerHTML = '<section class="form-empty"><h2>请选择问卷版本</h2><p>请选择研究者分配的 A 或 B。每个版本包含每类技巧 3 个样本和 6 个复合技巧样本，共 24 个样本。</p></section>';
+    app.innerHTML = '<section class="form-empty"><h2>请选择问卷版本</h2><p>请选择研究者分配的 A、B 或 C。每个版本包含每类技巧 3 个样本和 6 个复合技巧样本，共 24 个样本。</p></section>';
     updateProgress();
     return;
   }
@@ -171,7 +171,7 @@ function requireParticipant() {
 
 function requireForm() {
   if (currentForm()) return true;
-  alert("请先选择问卷版本 A 或 B。");
+  alert("请先选择问卷版本 A、B 或 C。");
   document.getElementById("form-id").focus();
   return false;
 }
