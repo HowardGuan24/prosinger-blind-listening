@@ -2206,8 +2206,8 @@
       "case_id": "en_glissando_03",
       "kind": "single",
       "title": "样本 3",
-      "lyrics": "IM ON YOUR SIDE",
-      "instruction": "YOUR: source-relative pitch delta +400→0 cents.",
+      "lyrics": "BABY YOU WOULD TAKE AWAY EVERYTHING REAL IN MY LIFE",
+      "instruction": "First syllable of EVERYTHING (EH V): source-relative pitch delta +200→0 cents.",
       "source_audio": "media/cases/en_glissando_03/source.wav",
       "candidates": [
         {
