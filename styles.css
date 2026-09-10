@@ -65,7 +65,7 @@ tbody tr:nth-child(even) td { background: #fbfcfe; }
 .score-grid { display: grid; grid-template-columns: 1fr; gap: 9px; margin-top: 12px; }
 .score-row { display: grid; grid-template-columns: 104px 1fr; align-items: center; gap: 8px; }
 .score-row span { color: var(--muted); font-size: .88rem; }
-.score-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.score-buttons { display: grid; grid-template-columns: repeat(var(--score-count), 1fr); gap: 4px; }
 .score-buttons label { position: relative; display: block; }
 .score-buttons input { position: absolute; opacity: 0; pointer-events: none; }
 .score-buttons b { display: block; padding: 6px 0; border: 1px solid var(--line-strong); border-radius: 3px; background: white; text-align: center; font-size: .88rem; cursor: pointer; }

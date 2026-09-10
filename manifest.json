@@ -1,9 +1,71 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "title": "ProSinger Blind Listening Evaluation",
-  "rating_scale": {
-    "min": 0,
-    "max": 4
+  "rating_scales": {
+    "naturalness": {
+      "type": "mos",
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "labels": {
+        "1": "非常不自然",
+        "2": "不自然",
+        "3": "一般",
+        "4": "自然",
+        "5": "非常自然"
+      }
+    },
+    "technique_quality": {
+      "type": "mos",
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "labels": {
+        "1": "很差",
+        "2": "较差",
+        "3": "一般",
+        "4": "良好",
+        "5": "优秀"
+      }
+    },
+    "singer_similarity": {
+      "type": "four_level_match",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "labels": {
+        "1": "完全不匹配",
+        "2": "少部分匹配",
+        "3": "大部分匹配",
+        "4": "完全匹配"
+      }
+    },
+    "technique_accuracy": {
+      "type": "four_level_match",
+      "values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "labels": {
+        "1": "完全不匹配",
+        "2": "少部分匹配",
+        "3": "大部分匹配",
+        "4": "完全匹配"
+      }
+    }
   },
   "forms": {
     "A": {

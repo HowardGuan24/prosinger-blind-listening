@@ -1,4 +1,4 @@
-const STORAGE_KEY = "prosinger_blind_listening_v2";
+const STORAGE_KEY = "prosinger_blind_listening_v3";
 const METRIC_NAMES = {
   naturalness: "自然度",
   singer_similarity: "歌手相似度",
@@ -44,9 +44,13 @@ function activeCases() {
 function scoreControl(caseId, candidateId, metric) {
   const key = ratingKey(caseId, candidateId, metric);
   const selected = state.ratings[key];
-  const buttons = [0,1,2,3,4].map(score => `
-    <label><input type="radio" name="${escapeHtml(key)}" value="${score}" ${Number(selected) === score ? "checked" : ""}><b>${score}</b></label>`).join("");
-  return `<div class="score-row"><span>${METRIC_NAMES[metric]}</span><div class="score-buttons" data-rating-key="${escapeHtml(key)}">${buttons}</div></div>`;
+  const scale = manifest.rating_scales[metric];
+  const buttons = scale.values.map(score => {
+    const scaleLabel = scale.labels[String(score)];
+    const accessibleLabel = `${METRIC_NAMES[metric]}：${scaleLabel}`;
+    return `<label><input type="radio" name="${escapeHtml(key)}" value="${score}" aria-label="${escapeHtml(accessibleLabel)}" ${Number(selected) === score ? "checked" : ""}><b title="${escapeHtml(scaleLabel)}">${score}</b></label>`;
+  }).join("");
+  return `<div class="score-row"><span>${METRIC_NAMES[metric]}</span><div class="score-buttons" style="--score-count:${scale.values.length}" data-rating-key="${escapeHtml(key)}">${buttons}</div></div>`;
 }
 
 function candidateCell(testCase, candidate) {
