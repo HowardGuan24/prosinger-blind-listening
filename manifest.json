@@ -1214,7 +1214,7 @@
       "kind": "composite",
       "title": "雨爱：气音+假音/中性/混声",
       "lyrics": "听雨的声音，一滴滴清晰，你的呼吸像雨滴，渗入我的爱里",
-      "instruction": "听雨的声音一点点清晰同时加气音和假音；你的呼吸像雨滴不加；渗入我的爱里混声",
+      "instruction": "听雨的、一滴滴：气声+假声；中间：无技巧；渗入我的爱里：混声",
       "source_audio": "media/cases/combo_10_yuai/source.wav",
       "candidates": [
         {
