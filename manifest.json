@@ -2240,7 +2240,7 @@
       "kind": "composite",
       "title": "样本 1",
       "lyrics": "NEAR FAR WHEREVER YOU ARE",
-      "instruction": "NEAR and FAR: breathy; FAR: vibrato; WHEREVER YOU ARE: pharyngeal.",
+      "instruction": "NEAR and FAR: breathy; FAR: vibrato; WHEREVER YOU ARE: mix.",
       "source_audio": "media/cases/en_combo_01/source.wav",
       "candidates": [
         {
@@ -2264,7 +2264,7 @@
       "kind": "composite",
       "title": "样本 2",
       "lyrics": "BABY YOU WOULD TAKE AWAY EVERYTHING GOOD IN MY LIFE",
-      "instruction": "EVERYTHING: pharyngeal + falsetto; GOOD IN MY LIFE: falsetto.",
+      "instruction": "BABY YOU WOULD TAKE AWAY: falsetto; YOU: source-relative pitch delta +200→0 cents.",
       "source_audio": "media/cases/en_combo_02/source.wav",
       "candidates": [
         {
@@ -2335,8 +2335,8 @@
       "case_id": "en_combo_05",
       "kind": "composite",
       "title": "样本 5",
-      "lyrics": "YOU WERE ALWAYS CRAZY LIKE THAT",
-      "instruction": "Apply falsetto and breathy globally.",
+      "lyrics": "I WILL ALWAYS LOVE YOU",
+      "instruction": "LOVE YOU: pharyngeal; final third of YOU: vibrato.",
       "source_audio": "media/cases/en_combo_05/source.wav",
       "candidates": [
         {
@@ -2360,7 +2360,7 @@
       "kind": "composite",
       "title": "样本 6",
       "lyrics": "SO MANY NIGHTS ID SIT BY MY WINDOW",
-      "instruction": "SO MANY: breathy; first syllable of MANY: source-relative pitch delta -300→0 cents.",
+      "instruction": "SO MANY: breathy; first syllable of MANY: source-relative pitch delta -150→0 cents.",
       "source_audio": "media/cases/en_combo_06/source.wav",
       "candidates": [
         {
