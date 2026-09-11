@@ -30,5 +30,6 @@ Without an endpoint, the submit button is disabled and JSON/CSV export remains a
 
 Chinese questionnaires A1, A2, B1, and B2 each contain 12 cases: three cases for each
 of three single techniques plus three composite cases. Together they retain all 48 cases
-from the original A/B pool without duplication. English questionnaire C retains 24 cases.
+from the original A/B pool without duplication. English questionnaires C1 and C2 each
+contain 12 cases and together retain all 24 cases from the original English form C.
 Technique references appear immediately before the evaluation block where they are needed.

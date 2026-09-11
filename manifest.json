@@ -148,8 +148,8 @@
         "combo_12_dayu"
       ]
     },
-    "C": {
-      "label": "Form C (English)",
+    "C1": {
+      "label": "Form C1 (English)",
       "language": "en",
       "reference_set": "en",
       "case_ids": [
@@ -159,21 +159,28 @@
         "en_breathy_01",
         "en_breathy_02",
         "en_breathy_03",
+        "en_vibrato_01",
+        "en_vibrato_02",
+        "en_vibrato_03",
+        "en_combo_01",
+        "en_combo_02",
+        "en_combo_03"
+      ]
+    },
+    "C2": {
+      "label": "Form C2 (English)",
+      "language": "en",
+      "reference_set": "en",
+      "case_ids": [
         "en_mix_01",
         "en_mix_02",
         "en_mix_03",
         "en_falsetto_01",
         "en_falsetto_02",
         "en_falsetto_03",
-        "en_vibrato_01",
-        "en_vibrato_02",
-        "en_vibrato_03",
         "en_glissando_01",
         "en_glissando_02",
         "en_glissando_03",
-        "en_combo_01",
-        "en_combo_02",
-        "en_combo_03",
         "en_combo_04",
         "en_combo_05",
         "en_combo_06"
@@ -2384,7 +2391,7 @@
     {
       "case_id": "en_combo_04",
       "kind": "composite",
-      "title": "样本 4",
+      "title": "样本 1",
       "lyrics": "I WILL ALWAYS LOVE YOU",
       "instruction": "LOVE YOU: pharyngeal; final third of YOU: vibrato.",
       "source_audio": "media/cases/en_combo_04/source.wav",
@@ -2408,7 +2415,7 @@
     {
       "case_id": "en_combo_05",
       "kind": "composite",
-      "title": "样本 5",
+      "title": "样本 2",
       "lyrics": "YOU WERE ALWAYS CRAZY LIKE THAT",
       "instruction": "Apply falsetto and breathy globally.",
       "source_audio": "media/cases/en_combo_05/source.wav",
@@ -2432,7 +2439,7 @@
     {
       "case_id": "en_combo_06",
       "kind": "composite",
-      "title": "样本 6",
+      "title": "样本 3",
       "lyrics": "SO MANY NIGHTS ID SIT BY MY WINDOW",
       "instruction": "SO MANY: breathy; first syllable of MANY: source-relative pitch delta -150→0 cents.",
       "source_audio": "media/cases/en_combo_06/source.wav",

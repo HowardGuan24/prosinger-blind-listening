@@ -1,5 +1,6 @@
 const STORAGE_KEY = "prosing_blind_listening_v6";
 const CHINESE_FORM_IDS = ["A1", "A2", "B1", "B2"];
+const ENGLISH_FORM_IDS = ["C1", "C2"];
 const METRIC_NAMES = {
   naturalness: "自然度",
   singer_similarity: "歌手相似度",
@@ -97,9 +98,9 @@ const PAGE_COPY = {
   en: {
     documentTitle: "Prosing Singing Technique Listening Evaluation",
     pageTitle: "Prosing Singing Technique Listening Evaluation",
-    pageIntro: "Please use headphones and rate 24 samples in a quiet environment. The evaluation takes approximately 15 minutes.",
+    pageIntro: "Please use headphones and rate 12 samples in a quiet environment. The evaluation takes approximately 8 minutes.",
     guideTitle: "Evaluation guide",
-    guideCopy: "This evaluation contains six single-technique conversion groups and six composite-technique conversion samples. Each single-technique group provides a corresponding technique reference performed by a professional singer. Listen to the reference before rating the anonymized candidates. After rating all results, click “Submit ratings.”",
+    guideCopy: "This evaluation contains three single-technique conversion groups and three composite-technique conversion samples. Technique references performed by professional singers appear before the corresponding evaluation block. Listen to the references before rating the anonymized candidates. After rating all results, click “Submit ratings.”",
     criteriaTitle: "Rating criteria",
     naturalnessTitle: "Naturalness · 1–5",
     naturalnessCopy: "Evaluate only whether the singing sounds natural and coherent, without obvious distortion.",
@@ -433,7 +434,7 @@ function updateProgress() {
   if (!manifest) return;
   const visibleCases = activeCases();
   const done = completedCaseCount();
-  const total = visibleCases.length || (currentLanguage() === "en" ? 24 : 12);
+  const total = visibleCases.length || 12;
   document.getElementById("progress-text").textContent = `${done} / ${total}`;
   const progress = document.getElementById("progress-bar");
   progress.max = total;
@@ -557,17 +558,12 @@ function anonymousParticipantId() {
 async function initializeStudyAssignment() {
   const query = new URLSearchParams(window.location.search);
   const englishRequested = (query.get("lang") || "").toLowerCase() === "en"
-    || (query.get("form") || "").toUpperCase() === "C";
+    || ["C", ...ENGLISH_FORM_IDS].includes((query.get("form") || "").toUpperCase());
   if (!state.participant_id) state.participant_id = anonymousParticipantId();
 
-  if (englishRequested) {
-    state.form_id = "C";
-    saveState();
-    return true;
-  }
-
   if (!manifest.submission_endpoint) return false;
-  const preferredForm = CHINESE_FORM_IDS.includes(state.form_id) ? state.form_id : "";
+  const eligibleFormIds = englishRequested ? ENGLISH_FORM_IDS : CHINESE_FORM_IDS;
+  const preferredForm = eligibleFormIds.includes(state.form_id) ? state.form_id : "";
   try {
     const response = await fetch(manifest.submission_endpoint, {
       method: "POST",
@@ -576,12 +572,13 @@ async function initializeStudyAssignment() {
         action: "assign",
         participant_id: state.participant_id,
         preferred_form: preferredForm,
+        language: englishRequested ? "en" : "zh",
       }),
       redirect: "follow",
     });
     if (!response.ok) return false;
     const assignment = await response.json();
-    if (!assignment.ok || !CHINESE_FORM_IDS.includes(assignment.form_id)) return false;
+    if (!assignment.ok || !eligibleFormIds.includes(assignment.form_id)) return false;
     state.form_id = assignment.form_id;
     saveState();
     return true;
@@ -609,7 +606,7 @@ async function startStudy() {
   manifest = window.BLIND_MANIFEST;
   if (!manifest) {
     const englishRequested = (new URLSearchParams(window.location.search).get("lang") || "").toLowerCase() === "en"
-      || (new URLSearchParams(window.location.search).get("form") || "").toUpperCase() === "C";
+      || ["C", ...ENGLISH_FORM_IDS].includes((new URLSearchParams(window.location.search).get("form") || "").toUpperCase());
     document.documentElement.lang = englishRequested ? "en" : "zh-CN";
     document.getElementById("app").innerHTML = englishRequested
       ? '<p class="loading">Failed to load: manifest.js is missing.</p>'
