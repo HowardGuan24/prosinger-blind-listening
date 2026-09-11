@@ -44,6 +44,10 @@ main { width: min(1900px, 98vw); margin: 20px auto 80px; }
 .section-heading p { margin: 0; color: var(--muted); }
 .tech-reference { padding: 10px 12px; border: 1px solid #dfdafb; background: var(--accent-soft); }
 .tech-reference strong { display: block; margin-bottom: 5px; font-size: .88rem; }
+.reference-lyrics { margin: 0 0 8px; color: var(--ink); font-size: .9rem; line-height: 1.65; }
+.reference-lyrics-label { font-weight: 800; }
+.reference-lyrics mark { padding: 1px 4px; border-radius: 3px; color: #352080; background: #dcd5ff; font-weight: 800; }
+.reference-lyrics-note { margin-left: 10px; color: var(--muted); font-size: .78rem; white-space: nowrap; }
 .reference-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .reference-item span { display: block; color: var(--muted); font-size: .82rem; font-weight: 700; }
 audio { position: relative; z-index: 0; display: block; width: 100%; max-width: 100%; height: 54px; min-height: 54px; margin-top: 6px; }

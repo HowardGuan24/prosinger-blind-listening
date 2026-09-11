@@ -29,6 +29,41 @@ const TECHNIQUE_NAMES_LOCALIZED = {
     glissando: "Glissando",
   },
 };
+const PITCH_REFERENCE_LYRICS = {
+  zh: {
+    vibrato: [
+      {text: "圆圈勾勒成指"},
+      {text: "纹", target: true},
+      {text: "，印在"},
+      {text: "我", target: true},
+      {text: "的嘴"},
+      {text: "唇", target: true},
+    ],
+    glissando: [
+      {text: "情人最"},
+      {text: "后", target: true},
+      {text: "难"},
+      {text: "免", target: true},
+      {text: "沦"},
+      {text: "为", target: true},
+      {text: "朋"},
+      {text: "友", target: true},
+    ],
+  },
+  en: {
+    vibrato: [
+      {text: "Edelweiss", target: true},
+      {text: ", "},
+      {text: "edelweiss", target: true},
+    ],
+    glissando: [
+      {text: "I "},
+      {text: "want", target: true},
+      {text: " you to "},
+      {text: "stay", target: true},
+    ],
+  },
+};
 const RATING_LABELS_ENGLISH = {
   naturalness: {1: "Very unnatural", 2: "Unnatural", 3: "Fair", 4: "Natural", 5: "Very natural"},
   singer_similarity: {1: "No match", 2: "Slight match", 3: "Partial match", 4: "Mostly matches", 5: "Full match"},
@@ -308,6 +343,18 @@ function tableForCases(cases) {
   return `<div class="table-wrap"><table style="--candidate-width:${candidateWidth}%"><colgroup><col class="case-column"><col class="source-column">${candidateColumns}</colgroup><thead><tr><th>${localized("样本与要求", "Sample and instruction")}</th><th>${localized("原始音频", "Original source")}</th>${candidateHeaders}</tr></thead><tbody>${cases.map(item => caseRow(item, candidateCount)).join("")}</tbody></table></div>`;
 }
 
+function referenceLyrics(referenceSet, technique) {
+  const segments = PITCH_REFERENCE_LYRICS[referenceSet]?.[technique];
+  if (!segments) return "";
+  const lyrics = segments.map(segment => {
+    const text = escapeHtml(segment.text);
+    return segment.target ? `<mark>${text}</mark>` : text;
+  }).join("");
+  const separator = localized("：", ": ");
+  const note = localized("高亮处为技巧位置", "Highlighted words indicate technique locations");
+  return `<p class="reference-lyrics"><span class="reference-lyrics-label">${localized("歌词", "Lyrics")}${separator}</span>${lyrics}<span class="reference-lyrics-note">${note}</span></p>`;
+}
+
 function referenceCard(technique) {
   const form = currentForm();
   const referenceSet = form && form.reference_set ? form.reference_set : "zh";
@@ -315,7 +362,7 @@ function referenceCard(technique) {
   const title = localized("技巧参考", "Technique reference");
   const controlLabel = localized("无技巧", "Without technique");
   const techniqueLabel = localized("有技巧", "With technique");
-  return `<div class="tech-reference"><strong>${title}</strong><div class="reference-pair"><div class="reference-item"><span>${controlLabel}</span>${audioPlayer(reference.control)}</div><div class="reference-item"><span>${techniqueLabel}</span>${audioPlayer(reference.technique)}</div></div></div>`;
+  return `<div class="tech-reference"><strong>${title}</strong>${referenceLyrics(referenceSet, technique)}<div class="reference-pair"><div class="reference-item"><span>${controlLabel}</span>${audioPlayer(reference.control)}</div><div class="reference-item"><span>${techniqueLabel}</span>${audioPlayer(reference.technique)}</div></div></div>`;
 }
 
 function render() {
