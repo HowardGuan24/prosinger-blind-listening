@@ -518,13 +518,40 @@ function anonymousParticipantId() {
   return `listener_${identifier}`;
 }
 
-function initializeStudyAssignment() {
-  const formIds = Object.keys(manifest.forms);
-  const requestedForm = (new URLSearchParams(window.location.search).get("form") || "").toUpperCase();
-  if (manifest.forms[requestedForm]) state.form_id = requestedForm;
-  else if (!manifest.forms[state.form_id]) state.form_id = formIds[Math.floor(Math.random() * formIds.length)];
+async function initializeStudyAssignment() {
+  const query = new URLSearchParams(window.location.search);
+  const englishRequested = (query.get("lang") || "").toLowerCase() === "en"
+    || (query.get("form") || "").toUpperCase() === "C";
   if (!state.participant_id) state.participant_id = anonymousParticipantId();
-  saveState();
+
+  if (englishRequested) {
+    state.form_id = "C";
+    saveState();
+    return true;
+  }
+
+  if (!manifest.submission_endpoint) return false;
+  const preferredForm = state.form_id === "A" || state.form_id === "B" ? state.form_id : "";
+  try {
+    const response = await fetch(manifest.submission_endpoint, {
+      method: "POST",
+      headers: {"Content-Type": "text/plain;charset=UTF-8"},
+      body: JSON.stringify({
+        action: "assign",
+        participant_id: state.participant_id,
+        preferred_form: preferredForm,
+      }),
+      redirect: "follow",
+    });
+    if (!response.ok) return false;
+    const assignment = await response.json();
+    if (!assignment.ok || (assignment.form_id !== "A" && assignment.form_id !== "B")) return false;
+    state.form_id = assignment.form_id;
+    saveState();
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
 document.getElementById("submit-results").addEventListener("click", submitResults);
@@ -542,9 +569,23 @@ document.getElementById("clear-ratings").addEventListener("click", () => {
   render();
 });
 
-manifest = window.BLIND_MANIFEST;
-if (manifest) {
-  initializeStudyAssignment();
+async function startStudy() {
+  manifest = window.BLIND_MANIFEST;
+  if (!manifest) {
+    const englishRequested = (new URLSearchParams(window.location.search).get("lang") || "").toLowerCase() === "en"
+      || (new URLSearchParams(window.location.search).get("form") || "").toUpperCase() === "C";
+    document.documentElement.lang = englishRequested ? "en" : "zh-CN";
+    document.getElementById("app").innerHTML = englishRequested
+      ? '<p class="loading">Failed to load: manifest.js is missing.</p>'
+      : '<p class="loading">加载失败：缺少 manifest.js。</p>';
+    return;
+  }
+
+  const assigned = await initializeStudyAssignment();
+  if (!assigned) {
+    document.getElementById("app").innerHTML = '<section class="form-empty"><h2>问卷分配失败</h2><p>请刷新页面；若问题仍然存在，请联系研究者。</p></section>';
+    return;
+  }
   applyPageLanguage();
   const submitButton = document.getElementById("submit-results");
   submitButton.disabled = !manifest.submission_endpoint;
@@ -554,10 +595,5 @@ if (manifest) {
   }
   render();
 }
-else {
-  const englishRequested = (new URLSearchParams(window.location.search).get("form") || "").toUpperCase() === "C";
-  document.documentElement.lang = englishRequested ? "en" : "zh-CN";
-  document.getElementById("app").innerHTML = englishRequested
-    ? '<p class="loading">Failed to load: manifest.js is missing.</p>'
-    : '<p class="loading">加载失败：缺少 manifest.js。</p>';
-}
+
+startStudy();
