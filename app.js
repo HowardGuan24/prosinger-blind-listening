@@ -83,7 +83,7 @@ const PAGE_COPY = {
     listenerInfoTitle: "听众信息",
     regionLabel: "所在地区",
     regionPlaceholder: "",
-    listenerTypeLabel: "用户类型",
+    listenerTypeLabel: "听众类型",
     listenerTypeVocal: "有声乐经验",
     listenerTypeMusic: "有音乐经验",
     listenerTypeNone: "无音乐经验",
