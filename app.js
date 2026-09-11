@@ -1,4 +1,5 @@
 const STORAGE_KEY = "prosing_blind_listening_v6";
+const CHINESE_FORM_IDS = ["A1", "A2", "B1", "B2"];
 const METRIC_NAMES = {
   naturalness: "自然度",
   singer_similarity: "歌手相似度",
@@ -566,7 +567,7 @@ async function initializeStudyAssignment() {
   }
 
   if (!manifest.submission_endpoint) return false;
-  const preferredForm = state.form_id === "A" || state.form_id === "B" ? state.form_id : "";
+  const preferredForm = CHINESE_FORM_IDS.includes(state.form_id) ? state.form_id : "";
   try {
     const response = await fetch(manifest.submission_endpoint, {
       method: "POST",
@@ -580,7 +581,7 @@ async function initializeStudyAssignment() {
     });
     if (!response.ok) return false;
     const assignment = await response.json();
-    if (!assignment.ok || (assignment.form_id !== "A" && assignment.form_id !== "B")) return false;
+    if (!assignment.ok || !CHINESE_FORM_IDS.includes(assignment.form_id)) return false;
     state.form_id = assignment.form_id;
     saveState();
     return true;

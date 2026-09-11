@@ -72,8 +72,8 @@
     }
   },
   "forms": {
-    "A": {
-      "label": "问卷 A",
+    "A1": {
+      "label": "问卷 A1",
       "language": "zh",
       "reference_set": "zh",
       "case_ids": [
@@ -87,12 +87,50 @@
         "vibrato_03",
         "vibrato_05",
         "combo_01_yiluxiangbei",
+        "combo_03_maoxianmeng",
+        "combo_05_wozhidao_a"
+      ]
+    },
+    "A2": {
+      "label": "问卷 A2",
+      "language": "zh",
+      "reference_set": "zh",
+      "case_ids": [
+        "mix_01",
+        "mix_03",
+        "mix_05",
+        "falsetto_01",
+        "falsetto_03",
+        "falsetto_05",
+        "gliss_01_hui",
+        "gliss_03_hei",
+        "gliss_05_fangyuan",
+        "combo_07_guangnian",
         "combo_09_dangnilaole",
         "combo_11_xiangziyou"
       ]
     },
-    "B": {
-      "label": "问卷 B",
+    "B1": {
+      "label": "问卷 B1",
+      "language": "zh",
+      "reference_set": "zh",
+      "case_ids": [
+        "pharyngeal_02",
+        "pharyngeal_04",
+        "pharyngeal_06",
+        "breathy_02",
+        "breathy_04",
+        "breathy_06",
+        "vibrato_02",
+        "vibrato_04",
+        "vibrato_06",
+        "combo_02_gumeng",
+        "combo_04_yujian",
+        "combo_06_wozhidao_b"
+      ]
+    },
+    "B2": {
+      "label": "问卷 B2",
       "language": "zh",
       "reference_set": "zh",
       "case_ids": [
@@ -105,7 +143,7 @@
         "gliss_02_si_mei",
         "gliss_04_dayu",
         "gliss_06_nanshan",
-        "combo_06_wozhidao_b",
+        "combo_08_luoyeguigen",
         "combo_10_yuai",
         "combo_12_dayu"
       ]
@@ -1314,7 +1352,7 @@
     {
       "case_id": "combo_06_wozhidao_b",
       "kind": "composite",
-      "title": "样本 1",
+      "title": "样本 3",
       "lyrics": "一直忘了说，我有多感动",
       "instruction": "全段混声；动叠加颤音",
       "source_audio": "media/cases/combo_06_wozhidao_b/source.wav",
@@ -1338,7 +1376,7 @@
     {
       "case_id": "combo_07_guangnian",
       "kind": "composite",
-      "title": "样本 4",
+      "title": "样本 1",
       "lyrics": "命运却让我们危难中相爱",
       "instruction": "全段咽音；危假音；难中相爱混声",
       "source_audio": "media/cases/combo_07_guangnian/source.wav",
@@ -1362,7 +1400,7 @@
     {
       "case_id": "combo_08_luoyeguigen",
       "kind": "composite",
-      "title": "样本 4",
+      "title": "样本 1",
       "lyrics": "不胜唏嘘，幻化成秋夜",
       "instruction": "不胜唏嘘假音；幻化成秋夜咽音；夜叠加颤音",
       "source_audio": "media/cases/combo_08_luoyeguigen/source.wav",
