@@ -12,6 +12,7 @@
   --danger: #b42318;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { color-scheme: light; overflow-x: hidden; }
 body { margin: 0; overflow-x: hidden; color: var(--ink); background: #fff; font: 16px/1.55 Inter, Arial, "Noto Sans SC", sans-serif; }
 .page-header { padding: 28px max(24px, 4vw); border-bottom: 1px solid var(--line); background: linear-gradient(110deg, #fff 60%, #f6f4ff); }
@@ -39,6 +40,10 @@ button:disabled { border-color: var(--line); color: #8a94a5; background: #eef1f5
 main { width: min(1900px, 98vw); margin: 20px auto 80px; }
 .form-empty { max-width: 720px; margin: 56px auto; padding: 28px; border: 1px solid var(--line); border-top: 4px solid var(--accent); background: var(--soft); text-align: center; }
 .form-empty h2 { margin-top: 0; }
+.thank-you-card { max-width: 720px; margin: clamp(60px, 12vh, 140px) auto; padding: 48px 32px; border: 1px solid #cce5dc; border-top: 4px solid var(--good); border-radius: 6px; background: linear-gradient(145deg, #fff 55%, var(--good-soft)); box-shadow: 0 16px 42px rgba(20,32,51,.09); text-align: center; }
+.thank-you-icon { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; color: white; background: var(--good); font-size: 2rem; font-weight: 900; }
+.thank-you-card h2 { margin: 0 0 10px; font-size: clamp(1.4rem, 3vw, 2rem); }
+.thank-you-card p { margin: 0; color: var(--muted); font-size: 1rem; }
 .section-heading { display: grid; grid-template-columns: 1fr minmax(540px, 720px); align-items: end; gap: 24px; margin: 38px 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
 .section-heading h2 { margin: 0; font-size: 1.35rem; }
 .section-heading p { margin: 0; color: var(--muted); }
@@ -88,6 +93,7 @@ tbody tr:nth-child(even) td { background: #fbfcfe; }
   .instructions, .toolbar { padding-left: 16px; padding-right: 16px; }
   .toolbar progress { width: 100%; }
   main { width: 100%; padding: 0 12px; }
+  .thank-you-card { margin: 48px auto; padding: 38px 22px; }
   .section-heading { margin-top: 28px; }
   .reference-pair { grid-template-columns: 1fr; }
   .table-wrap { overflow: visible; border: 0; background: transparent; }

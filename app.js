@@ -462,6 +462,22 @@ function requireForm() {
   return false;
 }
 
+function showThankYou() {
+  const instructions = document.querySelector(".instructions");
+  const toolbar = document.querySelector(".toolbar");
+  if (instructions) instructions.hidden = true;
+  if (toolbar) toolbar.hidden = true;
+  document.getElementById("page-intro").textContent = localized("评分已完成。", "Evaluation completed.");
+  document.getElementById("app").innerHTML = `
+    <section class="thank-you-card">
+      <div class="thank-you-icon" aria-hidden="true">✓</div>
+      <h2>${localized("提交成功，感谢你的参与！", "Submission complete. Thank you for participating!")}</h2>
+      <p>${localized("你的评分已成功上传，现在可以关闭此页面。", "Your ratings have been uploaded successfully. You may now close this page.")}</p>
+    </section>`;
+  document.getElementById("page-footer").textContent = localized("感谢你的参与。", "Thank you for participating.");
+  if (typeof window.scrollTo === "function") window.scrollTo({top: 0, behavior: "smooth"});
+}
+
 async function submitResults() {
   if (!requireForm()) return;
   if (!manifest.submission_endpoint) {
@@ -496,10 +512,11 @@ async function submitResults() {
       redirect: "follow",
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.error || "server_rejected");
     state.submitted_at[state.form_id] = payload.submitted_at;
     saveState();
-    status.className = "submission-status success";
-    status.textContent = localized("提交成功，感谢参与。", "Submitted successfully. Thank you for participating.");
+    showThankYou();
   } catch (error) {
     status.className = "submission-status error";
     status.textContent = localized(
@@ -507,7 +524,7 @@ async function submitResults() {
       `Submission failed (${error.message}). Your ratings remain saved in this browser; please try again later.`,
     );
   } finally {
-    button.disabled = !manifest.submission_endpoint;
+    button.disabled = !manifest.submission_endpoint || Boolean(state.submitted_at[state.form_id]);
   }
 }
 
@@ -592,6 +609,10 @@ async function startStudy() {
   if (!manifest.submission_endpoint) {
     document.getElementById("submission-status").textContent = localized("在线提交接口待配置", "Submission endpoint not configured");
     document.getElementById("page-footer").textContent = localized("当前部署尚未配置写入端点，请联系研究者。", "This deployment has no submission endpoint. Contact the researcher.");
+  }
+  if (state.submitted_at[state.form_id]) {
+    showThankYou();
+    return;
   }
   render();
 }
