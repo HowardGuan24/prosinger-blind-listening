@@ -24,6 +24,15 @@ textarea:focus, button:focus-visible { outline: 3px solid rgba(85,56,200,.2); ou
 .instructions h2 { margin: 0 0 12px; font-size: 1.25rem; }
 .study-guide { max-width: 1100px; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .study-guide p { margin: 0; color: var(--muted); }
+.study-guide p + p { margin-top: 12px; }
+.listener-profile { margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.profile-grid { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(520px, 2fr); gap: 20px; align-items: start; }
+.region-field { display: grid; gap: 7px; font-weight: 700; }
+.region-field input { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--ink); background: white; font: inherit; }
+.listener-profile fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.listener-profile legend { margin-bottom: 7px; font-weight: 700; }
+.listener-profile fieldset label { display: inline-flex; align-items: center; gap: 6px; margin: 0 18px 6px 0; color: var(--muted); }
+.listener-profile input:focus-visible { outline: 3px solid rgba(85,56,200,.2); outline-offset: 2px; border-color: var(--accent); }
 .rubric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .rubric-grid div { padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--soft); }
 .rubric-grid span { display: block; margin-top: 4px; color: var(--muted); font-size: .88rem; line-height: 1.45; }
@@ -88,6 +97,7 @@ tbody tr:nth-child(even) td { background: #fbfcfe; }
   .section-heading { grid-template-columns: 1fr; }
   .reference-grid { grid-template-columns: 1fr; }
   .rubric-grid { grid-template-columns: 1fr 1fr; }
+  .profile-grid { grid-template-columns: 1fr; }
   .toolbar { flex-wrap: wrap; position: static; }
   .submission-status { width: 100%; margin-left: 0; }
   .score-row { grid-template-columns: 1fr; gap: 4px; }
@@ -95,6 +105,7 @@ tbody tr:nth-child(even) td { background: #fbfcfe; }
 @media (max-width: 720px) {
   .page-header { padding: 22px 16px; }
   .rubric-grid { grid-template-columns: 1fr; }
+  .listener-profile fieldset label { display: flex; margin-right: 0; }
   .instructions, .toolbar { padding-left: 16px; padding-right: 16px; }
   .toolbar progress { width: 100%; }
   main { width: 100%; padding: 0 12px; }

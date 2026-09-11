@@ -74,11 +74,19 @@ const RATING_LABELS_ENGLISH = {
 };
 const PAGE_COPY = {
   zh: {
-    documentTitle: "Prosing 歌唱技巧盲听评测",
-    pageTitle: "Prosing 歌唱技巧盲听评测",
-    pageIntro: "请使用耳机，在安静环境中完成 12 个样本打分，大约需要 10–15 分钟。",
+    documentTitle: "Prosing 歌唱技巧转换评测",
+    pageTitle: "Prosing 歌唱技巧转换评测",
+    pageIntro: "请使用耳机，在安静环境中完成 12 组样本打分，大约需要 10–15 分钟。",
     guideTitle: "评测指引",
-    guideCopy: "本次测评包含三组单一技巧转换评测和三条复合技巧转换评测。专业歌手演唱的技巧参考会在对应评测前给出；请先试听参考，再评价匿名候选结果。完成全部评分后，请点击“上传评分”按钮。",
+    guideCopy1: "歌声技巧可以改变歌手演唱时的声音效果，包括气声、混声、咽音、假声等音色技巧，以及滑音、颤音等音高技巧。不同技巧的参考音频会在后续给出。该测评旨在评价不同模型生成技巧音频的质量。",
+    guideCopy2: "本次测评包含三组单一技巧转换评测和三条复合技巧转换评测。一条源音频对应两至三条生成音频，请对生成音频的各项指标打分。技巧参考会在对应评测前给出，评价指标的介绍在下方给出；请先试听参考，再评价匿名候选结果。完成全部评分后，请点击“上传评分”按钮。",
+    listenerInfoTitle: "听众信息",
+    regionLabel: "所在地区",
+    regionPlaceholder: "例如：中国深圳",
+    listenerTypeLabel: "用户类型",
+    listenerTypeVocal: "有声乐经验",
+    listenerTypeMusic: "有音乐经验（无声乐经验）",
+    listenerTypeNone: "无音乐经验",
     criteriaTitle: "评分标准",
     naturalnessTitle: "自然度 · 1–5",
     naturalnessCopy: "仅评价歌声是否听感自然、连贯，以及是否存在明显失真。",
@@ -89,18 +97,26 @@ const PAGE_COPY = {
     qualityTitle: "技巧质量 · 1–5",
     qualityCopy: "仅评价生成的技巧是否明显、自然。",
     scaleCopy: "所有指标均采用 1–5 分，1 表示表现最低，5 表示表现最高。请独立判断四项指标，不要用某一项的好坏代替另一项。",
-    progressUnit: " 个样本完成",
+    progressUnit: " 组样本完成",
     submitResults: "上传评分",
     clearRatings: "清空评分",
     loadingCopy: "正在加载测试清单……",
     footer: "评分会保存在当前浏览器；完成后请点击“上传评分”。",
   },
   en: {
-    documentTitle: "Prosing Singing Technique Listening Evaluation",
-    pageTitle: "Prosing Singing Technique Listening Evaluation",
-    pageIntro: "Please use headphones and rate 12 samples in a quiet environment. The evaluation takes approximately 10–15 minutes.",
+    documentTitle: "Prosing Singing Technique Conversion Evaluation",
+    pageTitle: "Prosing Singing Technique Conversion Evaluation",
+    pageIntro: "Please use headphones and rate 12 groups of samples in a quiet environment. The evaluation takes approximately 10–15 minutes.",
     guideTitle: "Evaluation guide",
-    guideCopy: "This evaluation contains three single-technique conversion groups and three composite-technique conversion samples. Technique references performed by professional singers appear before the corresponding evaluation block. Listen to the references before rating the anonymized candidates. After rating all results, click “Submit ratings.”",
+    guideCopy1: "Singing techniques alter the perceived effect of a performance. They include timbral techniques such as breathy voice, mixed voice, pharyngeal voice, and falsetto, as well as pitch techniques such as glissando and vibrato. Reference audio for each technique is provided below. This study evaluates the quality of technique rendering by different models.",
+    guideCopy2: "This evaluation contains three single-technique conversion groups and three composite-technique conversion samples. Each source recording is paired with two or three generated recordings. Rate each generated recording using the criteria below. Listen to the corresponding technique references before rating the anonymized candidates. After completing all ratings, click “Submit ratings.”",
+    listenerInfoTitle: "Listener information",
+    regionLabel: "Region",
+    regionPlaceholder: "For example: California, United States",
+    listenerTypeLabel: "Listener type",
+    listenerTypeVocal: "Vocal experience",
+    listenerTypeMusic: "Music experience (no vocal experience)",
+    listenerTypeNone: "No music experience",
     criteriaTitle: "Rating criteria",
     naturalnessTitle: "Naturalness · 1–5",
     naturalnessCopy: "Evaluate only whether the singing sounds natural and coherent, without obvious distortion.",
@@ -111,7 +127,7 @@ const PAGE_COPY = {
     qualityTitle: "Technique quality · 1–5",
     qualityCopy: "Evaluate only whether the rendered technique is perceptible and natural.",
     scaleCopy: "All metrics use a 1–5 scale, where 1 indicates the lowest performance and 5 the highest. Rate each metric independently; do not use one aspect as a substitute for another.",
-    progressUnit: " samples completed",
+    progressUnit: " sample groups completed",
     submitResults: "Submit ratings",
     clearRatings: "Clear ratings",
     loadingCopy: "Loading the evaluation set…",
@@ -163,10 +179,15 @@ let manifest = null;
 let state = loadState();
 let explainedGlissandoDirections = new Set();
 let previewFormId = "";
+let activeTimingStartedAt = null;
+let timingIntervalId = null;
 
 function loadState() {
-  const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}};
-  try { return {...empty, ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {})}; }
+  const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}, profile: {region: "", listener_type: ""}, timing: {}};
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    return {...empty, ...stored, profile: {...empty.profile, ...(stored.profile || {})}, timing: stored.timing || {}};
+  }
   catch (_) { return empty; }
 }
 
@@ -175,6 +196,72 @@ function saveState() {
   const saveStatus = document.getElementById("save-status");
   if (saveStatus) saveStatus.textContent = `${localized("已自动保存", "Saved")} · ${new Date().toLocaleTimeString()}`;
   updateProgress();
+}
+
+function persistStateSilently() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function ensureCurrentTiming() {
+  if (!state.form_id || previewFormId) return null;
+  if (!state.timing[state.form_id]) {
+    state.timing[state.form_id] = {started_at: new Date().toISOString(), active_seconds: 0};
+    persistStateSilently();
+  }
+  return state.timing[state.form_id];
+}
+
+function flushActiveTime() {
+  const timing = ensureCurrentTiming();
+  if (!timing || activeTimingStartedAt === null) return;
+  timing.active_seconds += Math.max(0, Date.now() - activeTimingStartedAt) / 1000;
+  activeTimingStartedAt = document.visibilityState === "visible" ? Date.now() : null;
+  persistStateSilently();
+}
+
+function startTiming() {
+  if (previewFormId || !ensureCurrentTiming()) return;
+  activeTimingStartedAt = document.visibilityState === "visible" ? Date.now() : null;
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushActiveTime();
+    else if (activeTimingStartedAt === null) activeTimingStartedAt = Date.now();
+  });
+  window.addEventListener("pagehide", flushActiveTime);
+  timingIntervalId = window.setInterval(flushActiveTime, 15000);
+}
+
+function timingSnapshot() {
+  flushActiveTime();
+  const timing = ensureCurrentTiming();
+  if (!timing) return {started_at: "", elapsed_seconds: 0, active_seconds: 0};
+  const startedAtMilliseconds = Date.parse(timing.started_at);
+  return {
+    started_at: timing.started_at,
+    elapsed_seconds: Number.isFinite(startedAtMilliseconds)
+      ? Math.max(0, Math.round((Date.now() - startedAtMilliseconds) / 1000))
+      : 0,
+    active_seconds: Math.max(0, Math.round(timing.active_seconds || 0)),
+  };
+}
+
+function profileComplete() {
+  return Boolean(state.profile.region.trim() && state.profile.listener_type);
+}
+
+function bindListenerProfile() {
+  const regionInput = document.getElementById("listener-region");
+  regionInput.value = state.profile.region;
+  regionInput.addEventListener("input", event => {
+    state.profile.region = event.target.value;
+    saveState();
+  });
+  document.querySelectorAll('input[name="listener-type"]').forEach(input => {
+    input.checked = input.value === state.profile.listener_type;
+    input.addEventListener("change", event => {
+      state.profile.listener_type = event.target.value;
+      saveState();
+    });
+  });
 }
 
 function escapeHtml(value) {
@@ -211,7 +298,14 @@ function applyPageLanguage() {
     "page-title": copy.pageTitle,
     "page-intro": copy.pageIntro,
     "guide-title": copy.guideTitle,
-    "guide-copy": copy.guideCopy,
+    "guide-copy-1": copy.guideCopy1,
+    "guide-copy-2": copy.guideCopy2,
+    "listener-info-title": copy.listenerInfoTitle,
+    "region-label": copy.regionLabel,
+    "listener-type-label": copy.listenerTypeLabel,
+    "listener-type-vocal": copy.listenerTypeVocal,
+    "listener-type-music": copy.listenerTypeMusic,
+    "listener-type-none": copy.listenerTypeNone,
     "criteria-title": copy.criteriaTitle,
     "naturalness-title": copy.naturalnessTitle,
     "naturalness-copy": copy.naturalnessCopy,
@@ -232,6 +326,7 @@ function applyPageLanguage() {
     const element = document.getElementById(elementId);
     if (element) element.textContent = text;
   }
+  document.getElementById("listener-region").placeholder = copy.regionPlaceholder;
 }
 
 function localizedCaseTitle(testCase) {
@@ -459,6 +554,12 @@ function updateProgress() {
     const testCase = visibleCases.find(item => item.case_id === row.dataset.caseId);
     row.classList.toggle("complete", Boolean(testCase) && caseRatingKeys(testCase).every(key => state.ratings[key] !== undefined));
   });
+  const submitButton = document.getElementById("submit-results");
+  submitButton.disabled = Boolean(previewFormId)
+    || !manifest.submission_endpoint
+    || Boolean(state.submitted_at[state.form_id])
+    || done !== total
+    || !profileComplete();
 }
 
 function resultPayload() {
@@ -483,10 +584,13 @@ function resultPayload() {
     }
   }
   return {
-    schema_version: 2,
+    schema_version: 3,
     exported_at: new Date().toISOString(),
     participant_id: state.participant_id,
     form_id: state.form_id,
+    region: state.profile.region.trim(),
+    listener_type: state.profile.listener_type,
+    ...timingSnapshot(),
     case_count: activeCases().length,
     rows,
   };
@@ -520,9 +624,13 @@ async function submitResults() {
     alert(localized("评分接收接口尚未配置，请联系研究者。", "The submission endpoint is not configured. Contact the researcher."));
     return;
   }
+  if (!profileComplete()) {
+    alert(localized("请先填写所在地区并选择用户类型。", "Enter your region and select a listener type before submitting."));
+    return;
+  }
   const total = activeCases().length;
   if (completedCaseCount() !== total) {
-    alert(localized(`请先完成当前问卷的 ${total} 个样本。`, `Please complete all ${total} samples before submitting.`));
+    alert(localized(`请先完成当前问卷的 ${total} 组样本。`, `Please complete all ${total} sample groups before submitting.`));
     return;
   }
   const button = document.getElementById("submit-results");
@@ -551,6 +659,8 @@ async function submitResults() {
     const result = await response.json();
     if (!result.ok) throw new Error(result.error || "server_rejected");
     state.submitted_at[state.form_id] = payload.submitted_at;
+    if (timingIntervalId !== null) window.clearInterval(timingIntervalId);
+    activeTimingStartedAt = null;
     saveState();
     showThankYou();
   } catch (error) {
@@ -642,6 +752,8 @@ async function startStudy() {
     return;
   }
   applyPageLanguage();
+  bindListenerProfile();
+  startTiming();
   const submitButton = document.getElementById("submit-results");
   submitButton.disabled = !manifest.submission_endpoint;
   if (!manifest.submission_endpoint) {
