@@ -27,3 +27,7 @@ python build_site.py --overwrite --submission-endpoint "https://YOUR-ENDPOINT"
 
 The endpoint receives one complete questionnaire as a JSON body using `text/plain;charset=UTF-8`.
 Without an endpoint, the submit button is disabled and JSON/CSV export remains available.
+
+Chinese questionnaires A and B each contain 12 cases: three cases for each of three
+single techniques plus three composite cases. English questionnaire C retains 24 cases.
+Technique references appear immediately before the evaluation block where they are needed.

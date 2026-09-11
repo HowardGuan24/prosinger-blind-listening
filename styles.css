@@ -47,6 +47,10 @@ main { width: min(1900px, 98vw); margin: 20px auto 80px; }
 .section-heading { display: grid; grid-template-columns: 1fr minmax(540px, 720px); align-items: end; gap: 24px; margin: 38px 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
 .section-heading h2 { margin: 0; font-size: 1.35rem; }
 .section-heading p { margin: 0; color: var(--muted); }
+.section-heading.compact { grid-template-columns: 1fr; }
+.reference-section { margin: 38px 0 24px; }
+.reference-section .section-heading { margin-top: 0; }
+.reference-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .tech-reference { padding: 10px 12px; border: 1px solid #dfdafb; background: var(--accent-soft); }
 .tech-reference strong { display: block; margin-bottom: 5px; font-size: .88rem; }
 .reference-lyrics { margin: 0 0 8px; color: var(--ink); font-size: .9rem; line-height: 1.65; }
@@ -82,6 +86,7 @@ tbody tr:nth-child(even) td { background: #fbfcfe; }
 .loading, footer { padding: 24px; color: var(--muted); text-align: center; }
 @media (max-width: 1080px) {
   .section-heading { grid-template-columns: 1fr; }
+  .reference-grid { grid-template-columns: 1fr; }
   .rubric-grid { grid-template-columns: 1fr 1fr; }
   .toolbar { flex-wrap: wrap; position: static; }
   .submission-status { width: 100%; margin-left: 0; }

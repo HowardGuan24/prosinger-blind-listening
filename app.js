@@ -74,9 +74,9 @@ const PAGE_COPY = {
   zh: {
     documentTitle: "Prosing 歌唱技巧盲听评测",
     pageTitle: "Prosing 歌唱技巧盲听评测",
-    pageIntro: "请使用耳机，在安静环境中完成 24 个样本打分，大约需要 15 分钟。",
+    pageIntro: "请使用耳机，在安静环境中完成 12 个样本打分，大约需要 8 分钟。",
     guideTitle: "评测指引",
-    guideCopy: "本次测评包含六组单一技巧转换评测和六条复合技巧转换评测。每个单一技巧组均提供一段由专业歌手演唱的对应技巧参考音频。请先听参考音频，再对匿名候选结果进行评分。完成所有结果的评分后，请点击“上传评分”按钮。",
+    guideCopy: "本次测评包含三组单一技巧转换评测和三条复合技巧转换评测。专业歌手演唱的技巧参考会在对应评测前给出；请先试听参考，再评价匿名候选结果。完成全部评分后，请点击“上传评分”按钮。",
     criteriaTitle: "评分标准",
     naturalnessTitle: "自然度 · 1–5",
     naturalnessCopy: "仅评价歌声是否听感自然、连贯，以及是否存在明显失真。",
@@ -359,7 +359,8 @@ function referenceCard(technique) {
   const form = currentForm();
   const referenceSet = form && form.reference_set ? form.reference_set : "zh";
   const reference = manifest.technique_references[referenceSet][technique];
-  const title = localized("技巧参考", "Technique reference");
+  const techniqueName = TECHNIQUE_NAMES_LOCALIZED[currentLanguage()][technique];
+  const title = localized(`${techniqueName}参考`, `${techniqueName} reference`);
   const controlLabel = localized("无技巧", "Without technique");
   const techniqueLabel = localized("有技巧", "With technique");
   return `<div class="tech-reference"><strong>${title}</strong>${referenceLyrics(referenceSet, technique)}<div class="reference-pair"><div class="reference-item"><span>${controlLabel}</span>${audioPlayer(reference.control)}</div><div class="reference-item"><span>${techniqueLabel}</span>${audioPlayer(reference.technique)}</div></div></div>`;
@@ -376,11 +377,28 @@ function render() {
   }
   const sections = [];
   const techniqueNames = TECHNIQUE_NAMES_LOCALIZED[currentLanguage()];
-  for (const [technique, techniqueName] of Object.entries(techniqueNames)) {
+  const activeTechniques = Object.keys(techniqueNames).filter(technique =>
+    visibleCases.some(item => item.kind === "single" && item.technique === technique)
+  );
+  const supplementalTechniques = Object.keys(techniqueNames).filter(technique => !activeTechniques.includes(technique));
+  const singleReferenceCopy = localized(
+    "以下三种技巧对应本问卷的单一技巧评测。参考音频由专业歌手演唱，仅用于理解目标技巧，无需评分。",
+    "These professional-singer references correspond to the single-technique evaluation below. They are provided only to demonstrate each target technique and are not rated.",
+  );
+  sections.push(`<section class="reference-section"><div class="section-heading compact"><h2>${localized("单一技巧参考", "Single-technique references")}</h2><p>${singleReferenceCopy}</p></div><div class="reference-grid">${activeTechniques.map(referenceCard).join("")}</div></section>`);
+  for (const technique of activeTechniques) {
+    const techniqueName = techniqueNames[technique];
     const cases = visibleCases.filter(item => item.kind === "single" && item.technique === technique);
-    sections.push(`<section><div class="section-heading"><h2>${escapeHtml(techniqueName)}</h2>${referenceCard(technique)}</div>${tableForCases(cases)}</section>`);
+    sections.push(`<section><div class="section-heading compact"><h2>${escapeHtml(techniqueName)}</h2></div>${tableForCases(cases)}</section>`);
   }
   const compositeCases = visibleCases.filter(item => item.kind === "composite");
+  if (supplementalTechniques.length) {
+    const supplementalCopy = localized(
+      "以下技巧未在前面的单技巧部分单独评价，但会出现在接下来的复合技巧样本中。请先试听参考音频，无需评分。",
+      "The following techniques were not rated separately above but may appear in the composite samples. Listen to these references before continuing; they are not rated.",
+    );
+    sections.push(`<section class="reference-section"><div class="section-heading compact"><h2>${localized("复合技巧补充参考", "Additional references for composite techniques")}</h2><p>${supplementalCopy}</p></div><div class="reference-grid">${supplementalTechniques.map(referenceCard).join("")}</div></section>`);
+  }
   sections.push(`<section><div class="section-heading"><h2>${localized("复合技巧", "Composite techniques")}</h2><p>${localized("请结合歌词和技巧分配，评价候选歌声的技巧准确率与技巧质量。", "Evaluate technique accuracy and quality using the lyrics and assigned technique program.")}</p></div>${tableForCases(compositeCases)}</section>`);
   app.innerHTML = sections.join("");
   bindInputs();
@@ -414,7 +432,7 @@ function updateProgress() {
   if (!manifest) return;
   const visibleCases = activeCases();
   const done = completedCaseCount();
-  const total = visibleCases.length || 24;
+  const total = visibleCases.length || (currentLanguage() === "en" ? 24 : 12);
   document.getElementById("progress-text").textContent = `${done} / ${total}`;
   const progress = document.getElementById("progress-bar");
   progress.max = total;
