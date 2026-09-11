@@ -76,7 +76,7 @@ const PAGE_COPY = {
   zh: {
     documentTitle: "Prosing 歌唱技巧盲听评测",
     pageTitle: "Prosing 歌唱技巧盲听评测",
-    pageIntro: "请使用耳机，在安静环境中完成 12 个样本打分，大约需要 8 分钟。",
+    pageIntro: "请使用耳机，在安静环境中完成 12 个样本打分，大约需要 10–15 分钟。",
     guideTitle: "评测指引",
     guideCopy: "本次测评包含三组单一技巧转换评测和三条复合技巧转换评测。专业歌手演唱的技巧参考会在对应评测前给出；请先试听参考，再评价匿名候选结果。完成全部评分后，请点击“上传评分”按钮。",
     criteriaTitle: "评分标准",
@@ -98,7 +98,7 @@ const PAGE_COPY = {
   en: {
     documentTitle: "Prosing Singing Technique Listening Evaluation",
     pageTitle: "Prosing Singing Technique Listening Evaluation",
-    pageIntro: "Please use headphones and rate 12 samples in a quiet environment. The evaluation takes approximately 8 minutes.",
+    pageIntro: "Please use headphones and rate 12 samples in a quiet environment. The evaluation takes approximately 10–15 minutes.",
     guideTitle: "Evaluation guide",
     guideCopy: "This evaluation contains three single-technique conversion groups and three composite-technique conversion samples. Technique references performed by professional singers appear before the corresponding evaluation block. Listen to the references before rating the anonymized candidates. After rating all results, click “Submit ratings.”",
     criteriaTitle: "Rating criteria",
@@ -162,6 +162,7 @@ const ENGLISH_INSTRUCTION_OVERRIDES = {
 let manifest = null;
 let state = loadState();
 let explainedGlissandoDirections = new Set();
+let previewFormId = "";
 
 function loadState() {
   const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}};
@@ -185,7 +186,7 @@ function ratingKey(caseId, candidateId, metric) { return `${caseId}|${candidateI
 function audioPlayer(path) { return `<audio controls preload="none" src="${escapeHtml(path)}"></audio>`; }
 
 function currentForm() {
-  return manifest && manifest.forms ? manifest.forms[state.form_id] : null;
+  return manifest && manifest.forms ? manifest.forms[previewFormId || state.form_id] : null;
 }
 
 function currentLanguage() {
@@ -407,6 +408,21 @@ function render() {
   updateProgress();
 }
 
+function applyPreviewMode() {
+  if (!previewFormId) return;
+  document.querySelectorAll("input, textarea").forEach(element => { element.disabled = true; });
+  document.getElementById("submit-results").disabled = true;
+  document.getElementById("clear-ratings").disabled = true;
+  document.getElementById("submission-status").textContent = localized(
+    `预览模式 · 问卷 ${previewFormId}`,
+    `Preview mode · Form ${previewFormId}`,
+  );
+  document.getElementById("page-footer").textContent = localized(
+    "预览模式仅供检查，不会保存或上传评分。",
+    "Preview mode is for inspection only; ratings are neither saved nor submitted.",
+  );
+}
+
 function bindInputs() {
   document.querySelectorAll("input[type=radio]").forEach(input => input.addEventListener("change", event => {
     state.ratings[event.target.name] = Number(event.target.value);
@@ -557,6 +573,12 @@ function anonymousParticipantId() {
 
 async function initializeStudyAssignment() {
   const query = new URLSearchParams(window.location.search);
+  const requestedPreview = (query.get("preview") || "").toUpperCase();
+  const allFormIds = [...CHINESE_FORM_IDS, ...ENGLISH_FORM_IDS];
+  if (allFormIds.includes(requestedPreview)) {
+    previewFormId = requestedPreview;
+    return true;
+  }
   const englishRequested = (query.get("lang") || "").toLowerCase() === "en"
     || ["C", ...ENGLISH_FORM_IDS].includes((query.get("form") || "").toUpperCase());
   if (!state.participant_id) state.participant_id = anonymousParticipantId();
@@ -626,11 +648,12 @@ async function startStudy() {
     document.getElementById("submission-status").textContent = localized("在线提交接口待配置", "Submission endpoint not configured");
     document.getElementById("page-footer").textContent = localized("当前部署尚未配置写入端点，请联系研究者。", "This deployment has no submission endpoint. Contact the researcher.");
   }
-  if (state.submitted_at[state.form_id]) {
+  if (!previewFormId && state.submitted_at[state.form_id]) {
     showThankYou();
     return;
   }
   render();
+  applyPreviewMode();
 }
 
 startStudy();

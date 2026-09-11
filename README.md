@@ -33,3 +33,6 @@ of three single techniques plus three composite cases. Together they retain all 
 from the original A/B pool without duplication. English questionnaires C1 and C2 each
 contain 12 cases and together retain all 24 cases from the original English form C.
 Technique references appear immediately before the evaluation block where they are needed.
+
+Use `?preview=A1`, `?preview=A2`, `?preview=B1`, `?preview=B2`, `?preview=C1`, or
+`?preview=C2` to inspect a specific form without creating an assignment or enabling submission.
