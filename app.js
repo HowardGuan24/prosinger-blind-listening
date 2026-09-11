@@ -541,6 +541,57 @@ function completedCaseCount() {
   return activeCases().filter(testCase => caseRatingKeys(testCase).every(key => state.ratings[key] !== undefined)).length;
 }
 
+let cloudbaseAccessToken = "";
+
+function cloudbaseBackendAvailable() {
+  const config = manifest && manifest.cloudbase;
+  return Boolean(config && config.env_id && config.assign_rpc && config.submit_rpc);
+}
+
+function cloudbaseGatewayBase() {
+  return `https://${manifest.cloudbase.env_id}.api.tcloudbasegateway.com`;
+}
+
+async function getCloudbaseAccessToken(forceRefresh = false) {
+  if (cloudbaseAccessToken && !forceRefresh) return cloudbaseAccessToken;
+  const response = await fetch(`${cloudbaseGatewayBase()}/auth/v1/signin/anonymously`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-device-id": state.participant_id,
+    },
+    body: "{}",
+  });
+  if (!response.ok) throw new Error(`authentication HTTP ${response.status}`);
+  const result = await response.json();
+  const token = result.access_token || (result.data && result.data.access_token);
+  if (!token) throw new Error("authentication token missing");
+  cloudbaseAccessToken = token;
+  return token;
+}
+
+async function callCloudbaseRpc(functionName, parameters, allowRetry = true) {
+  const accessToken = await getCloudbaseAccessToken();
+  const response = await fetch(`${cloudbaseGatewayBase()}/v1/rdb/rest/rpc/${functionName}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(parameters),
+  });
+  if (response.status === 401 && allowRetry) {
+    await getCloudbaseAccessToken(true);
+    return callCloudbaseRpc(functionName, parameters, false);
+  }
+  if (!response.ok) {
+    const errorText = (await response.text()).slice(0, 240);
+    throw new Error(`backend HTTP ${response.status}${errorText ? `: ${errorText}` : ""}`);
+  }
+  const result = await response.json();
+  return Array.isArray(result) && result.length === 1 ? result[0] : result;
+}
+
 function updateProgress() {
   if (!manifest) return;
   const visibleCases = activeCases();
@@ -556,7 +607,7 @@ function updateProgress() {
   });
   const submitButton = document.getElementById("submit-results");
   submitButton.disabled = Boolean(previewFormId)
-    || !manifest.submission_endpoint
+    || !cloudbaseBackendAvailable()
     || Boolean(state.submitted_at[state.form_id])
     || done !== total
     || !profileComplete();
@@ -620,12 +671,12 @@ function showThankYou() {
 
 async function submitResults() {
   if (!requireForm()) return;
-  if (!manifest.submission_endpoint) {
+  if (!cloudbaseBackendAvailable()) {
     alert(localized("评分接收接口尚未配置，请联系研究者。", "The submission endpoint is not configured. Contact the researcher."));
     return;
   }
   if (!profileComplete()) {
-    alert(localized("请先填写所在地区并选择用户类型。", "Enter your region and select a listener type before submitting."));
+    alert(localized("请先填写所在地区并选择听众类型。", "Enter your region and select a listener type before submitting."));
     return;
   }
   const total = activeCases().length;
@@ -649,14 +700,7 @@ async function submitResults() {
     submitted_at: new Date().toISOString(),
   };
   try {
-    const response = await fetch(manifest.submission_endpoint, {
-      method: "POST",
-      headers: {"Content-Type": "text/plain;charset=UTF-8"},
-      body: JSON.stringify(payload),
-      redirect: "follow",
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const result = await response.json();
+    const result = await callCloudbaseRpc(manifest.cloudbase.submit_rpc, {p_payload: payload});
     if (!result.ok) throw new Error(result.error || "server_rejected");
     state.submitted_at[state.form_id] = payload.submitted_at;
     if (timingIntervalId !== null) window.clearInterval(timingIntervalId);
@@ -670,7 +714,7 @@ async function submitResults() {
       `Submission failed (${error.message}). Your ratings remain saved in this browser; please try again later.`,
     );
   } finally {
-    button.disabled = !manifest.submission_endpoint || Boolean(state.submitted_at[state.form_id]);
+    button.disabled = !cloudbaseBackendAvailable() || Boolean(state.submitted_at[state.form_id]);
   }
 }
 
@@ -693,23 +737,15 @@ async function initializeStudyAssignment() {
     || ["C", ...ENGLISH_FORM_IDS].includes((query.get("form") || "").toUpperCase());
   if (!state.participant_id) state.participant_id = anonymousParticipantId();
 
-  if (!manifest.submission_endpoint) return false;
+  if (!cloudbaseBackendAvailable()) return false;
   const eligibleFormIds = englishRequested ? ENGLISH_FORM_IDS : CHINESE_FORM_IDS;
   const preferredForm = eligibleFormIds.includes(state.form_id) ? state.form_id : "";
   try {
-    const response = await fetch(manifest.submission_endpoint, {
-      method: "POST",
-      headers: {"Content-Type": "text/plain;charset=UTF-8"},
-      body: JSON.stringify({
-        action: "assign",
-        participant_id: state.participant_id,
-        preferred_form: preferredForm,
-        language: englishRequested ? "en" : "zh",
-      }),
-      redirect: "follow",
+    const assignment = await callCloudbaseRpc(manifest.cloudbase.assign_rpc, {
+      p_participant_id: state.participant_id,
+      p_preferred_form: preferredForm,
+      p_language: englishRequested ? "en" : "zh",
     });
-    if (!response.ok) return false;
-    const assignment = await response.json();
     if (!assignment.ok || !eligibleFormIds.includes(assignment.form_id)) return false;
     state.form_id = assignment.form_id;
     saveState();
@@ -755,8 +791,8 @@ async function startStudy() {
   bindListenerProfile();
   startTiming();
   const submitButton = document.getElementById("submit-results");
-  submitButton.disabled = !manifest.submission_endpoint;
-  if (!manifest.submission_endpoint) {
+  submitButton.disabled = !cloudbaseBackendAvailable();
+  if (!cloudbaseBackendAvailable()) {
     document.getElementById("submission-status").textContent = localized("在线提交接口待配置", "Submission endpoint not configured");
     document.getElementById("page-footer").textContent = localized("当前部署尚未配置写入端点，请联系研究者。", "This deployment has no submission endpoint. Contact the researcher.");
   }

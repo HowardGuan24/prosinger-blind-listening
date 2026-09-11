@@ -187,7 +187,12 @@
       ]
     }
   },
-  "submission_endpoint": "https://script.google.com/macros/s/AKfycbzjnpwUBjtUeCS-HuqIWEIKG-ZHJDfVmbRHzPSTI0mRqnGt3yufatFKb2MqWwf-plfBNQ/exec",
+  "submission_endpoint": "",
+  "cloudbase": {
+    "env_id": "prosing-eval-d1gbd5bgnc7e58575",
+    "assign_rpc": "prosing_assign_questionnaire",
+    "submit_rpc": "prosing_store_submission"
+  },
   "technique_references": {
     "zh": {
       "pharyngeal": {
