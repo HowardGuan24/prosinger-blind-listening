@@ -541,49 +541,17 @@ function completedCaseCount() {
   return activeCases().filter(testCase => caseRatingKeys(testCase).every(key => state.ratings[key] !== undefined)).length;
 }
 
-let cloudbaseAccessToken = "";
-
 function cloudbaseBackendAvailable() {
   const config = manifest && manifest.cloudbase;
-  return Boolean(config && config.env_id && config.assign_rpc && config.submit_rpc);
+  return Boolean(config && config.proxy_endpoint);
 }
 
-function cloudbaseGatewayBase() {
-  return `https://${manifest.cloudbase.env_id}.api.tcloudbasegateway.com`;
-}
-
-async function getCloudbaseAccessToken(forceRefresh = false) {
-  if (cloudbaseAccessToken && !forceRefresh) return cloudbaseAccessToken;
-  const response = await fetch(`${cloudbaseGatewayBase()}/auth/v1/signin/anonymously`, {
+async function callQuestionnaireProxy(action, payload) {
+  const response = await fetch(manifest.cloudbase.proxy_endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-device-id": state.participant_id,
-    },
-    body: "{}",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({action, ...payload}),
   });
-  if (!response.ok) throw new Error(`authentication HTTP ${response.status}`);
-  const result = await response.json();
-  const token = result.access_token || (result.data && result.data.access_token);
-  if (!token) throw new Error("authentication token missing");
-  cloudbaseAccessToken = token;
-  return token;
-}
-
-async function callCloudbaseRpc(functionName, parameters, allowRetry = true) {
-  const accessToken = await getCloudbaseAccessToken();
-  const response = await fetch(`${cloudbaseGatewayBase()}/v1/rdb/rest/rpc/${functionName}`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(parameters),
-  });
-  if (response.status === 401 && allowRetry) {
-    await getCloudbaseAccessToken(true);
-    return callCloudbaseRpc(functionName, parameters, false);
-  }
   if (!response.ok) {
     const errorText = (await response.text()).slice(0, 240);
     throw new Error(`backend HTTP ${response.status}${errorText ? `: ${errorText}` : ""}`);
@@ -700,7 +668,7 @@ async function submitResults() {
     submitted_at: new Date().toISOString(),
   };
   try {
-    const result = await callCloudbaseRpc(manifest.cloudbase.submit_rpc, {p_payload: payload});
+    const result = await callQuestionnaireProxy("submit", {payload});
     if (!result.ok) throw new Error(result.error || "server_rejected");
     state.submitted_at[state.form_id] = payload.submitted_at;
     if (timingIntervalId !== null) window.clearInterval(timingIntervalId);
@@ -741,10 +709,10 @@ async function initializeStudyAssignment() {
   const eligibleFormIds = englishRequested ? ENGLISH_FORM_IDS : CHINESE_FORM_IDS;
   const preferredForm = eligibleFormIds.includes(state.form_id) ? state.form_id : "";
   try {
-    const assignment = await callCloudbaseRpc(manifest.cloudbase.assign_rpc, {
-      p_participant_id: state.participant_id,
-      p_preferred_form: preferredForm,
-      p_language: englishRequested ? "en" : "zh",
+    const assignment = await callQuestionnaireProxy("assign", {
+      participant_id: state.participant_id,
+      preferred_form: preferredForm,
+      language: englishRequested ? "en" : "zh",
     });
     if (!assignment.ok || !eligibleFormIds.includes(assignment.form_id)) return false;
     state.form_id = assignment.form_id;
