@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Prosing 评测进度</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <main class="dashboard-shell">
+    <header class="dashboard-header">
+      <div>
+        <p class="eyebrow">PROSING EVALUATION</p>
+        <h1>评测进度</h1>
+      </div>
+      <div class="header-actions">
+        <div class="live-status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="refresh-status">正在读取数据</span>
+        </div>
+        <button id="refresh-button" type="button">立即刷新</button>
+      </div>
+    </header>
+
+    <section class="summary-grid" aria-label="提交概览">
+      <article class="summary-card summary-card-primary">
+        <span>有效提交</span>
+        <strong id="total-submissions">—</strong>
+        <small>已排除测试记录</small>
+      </article>
+      <article class="summary-card">
+        <span>今日新增</span>
+        <strong id="today-submissions">—</strong>
+        <small id="latest-submission">尚无提交</small>
+      </article>
+      <article class="summary-card">
+        <span>评分条数</span>
+        <strong id="score-rows">—</strong>
+        <small>所有有效评分行</small>
+      </article>
+      <article class="summary-card">
+        <span>平均活跃时长</span>
+        <strong id="average-active-time">—</strong>
+        <small>停留在页面前台的时间</small>
+      </article>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel panel-wide">
+        <div class="panel-heading">
+          <div>
+            <h2>最近 7 天</h2>
+            <p>按提交时间统计，不包含测试记录</p>
+          </div>
+        </div>
+        <div id="daily-chart" class="daily-chart" role="img" aria-label="最近七天提交数量"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>问卷版本</h2>
+            <p>各子问卷的有效提交数</p>
+          </div>
+        </div>
+        <div id="form-list" class="bar-list"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>听众构成</h2>
+            <p>按听众类型汇总</p>
+          </div>
+        </div>
+        <div id="listener-list" class="bar-list"></div>
+      </article>
+
+      <article class="panel panel-wide">
+        <div class="panel-heading">
+          <div>
+            <h2>当前平均分</h2>
+            <p>仅用于观察数据流入，不替代最终统计分析</p>
+          </div>
+          <span class="scale-note">1–5 分</span>
+        </div>
+        <div id="metric-grid" class="metric-grid"></div>
+      </article>
+    </section>
+
+    <footer>
+      <span id="generated-at">等待首次刷新</span>
+      <span id="test-count"></span>
+    </footer>
+  </main>
+
+  <script src="cloudbase-config.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
