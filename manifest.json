@@ -1,5 +1,6 @@
 {
   "schema_version": 7,
+  "stimulus_set_revision": "2026-09-12-vibrato06-r2",
   "title": "Prosing Blind Listening Evaluation",
   "rating_scales": {
     "naturalness": {
@@ -1212,13 +1213,14 @@
       "title": "样本 3",
       "technique": "vibrato",
       "technique_name": "颤音 Vibrato",
-      "instruction": "第一个‘的’、‘往’：±20c @ 5Hz",
+      "instruction": "第二个‘的’、‘往’：±20c @ 5Hz",
+      "stimulus_revision": "vibrato06-second-de-r2",
       "source_audio": "media/cases/vibrato_06/source.wav",
       "candidates": [
         {
           "candidate_id": "cand_281b2c0bfc951a",
           "display_label": "Candidate A",
-          "audio": "media/cases/vibrato_06/cand_281b2c0bfc951a.wav"
+          "audio": "media/cases/vibrato_06/cand_281b2c0bfc951a_r2.wav"
         },
         {
           "candidate_id": "cand_3bcc9667ce3181",
@@ -1228,7 +1230,7 @@
         {
           "candidate_id": "cand_b7091f8ee8a751",
           "display_label": "Candidate C",
-          "audio": "media/cases/vibrato_06/cand_b7091f8ee8a751.wav"
+          "audio": "media/cases/vibrato_06/cand_b7091f8ee8a751_r2.wav"
         }
       ],
       "metrics": [
