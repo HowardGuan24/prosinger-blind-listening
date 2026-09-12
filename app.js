@@ -183,10 +183,10 @@ let activeTimingStartedAt = null;
 let timingIntervalId = null;
 
 function loadState() {
-  const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}, profile: {region: "", listener_type: ""}, timing: {}, stimulus_revisions: {}};
+  const empty = {participant_id: "", form_id: "", ratings: {}, notes: {}, submitted_at: {}, submission_ids: {}, profile: {region: "", listener_type: ""}, timing: {}};
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-    return {...empty, ...stored, profile: {...empty.profile, ...(stored.profile || {})}, timing: stored.timing || {}, stimulus_revisions: stored.stimulus_revisions || {}};
+    return {...empty, ...stored, profile: {...empty.profile, ...(stored.profile || {})}, timing: stored.timing || {}};
   }
   catch (_) { return empty; }
 }
@@ -269,23 +269,6 @@ function escapeHtml(value) {
 }
 
 function ratingKey(caseId, candidateId, metric) { return `${caseId}|${candidateId}|${metric}`; }
-
-function reconcileStimulusRevisions() {
-  let changed = false;
-  for (const testCase of manifest.cases || []) {
-    if (!testCase.stimulus_revision) continue;
-    const previousRevision = state.stimulus_revisions[testCase.case_id] || "legacy";
-    if (previousRevision === testCase.stimulus_revision) continue;
-    const ratingPrefix = `${testCase.case_id}|`;
-    for (const key of Object.keys(state.ratings)) {
-      if (key.startsWith(ratingPrefix)) delete state.ratings[key];
-    }
-    delete state.notes[testCase.case_id];
-    state.stimulus_revisions[testCase.case_id] = testCase.stimulus_revision;
-    changed = true;
-  }
-  if (changed) persistStateSilently();
-}
 
 function audioPlayer(path) { return `<audio controls preload="none" src="${escapeHtml(path)}"></audio>`; }
 
@@ -611,7 +594,6 @@ function resultPayload() {
           kind: testCase.kind,
           technique: testCase.technique || "composite",
           candidate_id: candidate.candidate_id,
-          stimulus_revision: testCase.stimulus_revision || "legacy",
           display_label: candidate.display_label,
           metric,
           score: state.ratings[key] !== undefined ? state.ratings[key] : "",
@@ -622,7 +604,6 @@ function resultPayload() {
   }
   return {
     schema_version: 3,
-    stimulus_set_revision: manifest.stimulus_set_revision || "legacy",
     exported_at: new Date().toISOString(),
     participant_id: state.participant_id,
     form_id: state.form_id,
@@ -774,7 +755,6 @@ async function startStudy() {
     document.getElementById("app").innerHTML = '<section class="form-empty"><h2>问卷分配失败</h2><p>请刷新页面；若问题仍然存在，请联系研究者。</p></section>';
     return;
   }
-  reconcileStimulusRevisions();
   applyPageLanguage();
   bindListenerProfile();
   startTiming();
